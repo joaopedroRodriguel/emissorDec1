@@ -34,4 +34,8 @@ public class Estudante {
             targetEntity=Declaracao.class,
             cascade=CascadeType.ALL)
     private List<Declaracao> declaracoes;
+
+    public Estudante(Instituicao instituicao) {
+        this.instituicao = instituicao;
+    }
 }
