@@ -36,4 +36,8 @@ public class PeriodoLetivo {
     @ManyToOne
     @JoinColumn(name = "instituicao_id")
     private Instituicao instituicao;
+
+    public PeriodoLetivo(Instituicao instituicao) {
+        this.instituicao = instituicao;
+    }
 }
