@@ -29,7 +29,7 @@ public class EstudanteController {
     @RequestMapping("/form")
     public ModelAndView getForm(ModelAndView model) {
         model.addObject("estudante", new Estudante(new Instituicao()));
-        model.addObject("estudante", "estudante");
+        model.addObject("estudante", "cadastrar");
         model.setViewName("estudantes/form");
         return model;
     }
@@ -58,7 +58,7 @@ public class EstudanteController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView listEstudantes(ModelAndView model) {
-        model.addObject("estudante", "estudante");
+        model.addObject("estudante", "listar");
         model.addObject("estudante", estudanteService.list());
         model.setViewName("estudantes/list");
         return model;
