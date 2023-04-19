@@ -1,0 +1,39 @@
+.logo-bar {
+    color: white;
+    text-align: center;
+}
+
+.logo-bar img {
+    vertical-align: bottom;
+    margin-right: 5px;
+}
+
+.logo-bar i{
+    font-size: 80px;
+}
+
+.logo-font {
+    font-family: 'Fugaz One', cursive;
+    font-size: 2.3rem;
+}
+
+.card{
+    color: #c905fa;
+}
+
+.card-body input{
+    background-color: #c905fa;
+}
+
+.card-body option {
+    background-color: white;
+}
+
+.btn-purple{
+    background-color: #c905fa;
+    color: white;
+}
+
+.btn-secundary{
+    color: white;
+}
