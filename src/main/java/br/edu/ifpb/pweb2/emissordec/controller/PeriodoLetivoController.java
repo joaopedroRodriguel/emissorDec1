@@ -7,6 +7,7 @@ import br.edu.ifpb.pweb2.emissordec.service.InstituicaoService;
 import br.edu.ifpb.pweb2.emissordec.service.PeriodoLetivoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,43 +26,27 @@ public class PeriodoLetivoController {
     @Autowired
     PeriodoLetivoService periodoLetivoService;
 
-    @Autowired
-    InstituicaoService instituicaoService;
+
 
     @RequestMapping("/form")
     public ModelAndView getForm(ModelAndView model) {
         model.addObject("periodoLetivo", new PeriodoLetivo(new Instituicao()));
-        model.addObject("periodoLetivo", "periodoLetivo");
+        model.addObject("periodoLetivo", "cadastrar");
         model.setViewName("periodos/form");
         return model;
     }
-
-    @ModelAttribute("instituicaoItens")
-    public List<Instituicao> getInstituicoes() {
-        return instituicaoService.list();
-    }
-
+    // Falta terminar esse método, estou tendo dúvidas em relação ao relacionamento!!!
     @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView save(PeriodoLetivo periodoLetivo, ModelAndView model, RedirectAttributes attrs) {
-        Instituicao instituicao = null;
-        Optional<Instituicao> opInstituicao = instituicaoService.search(periodoLetivo.getInstituicao().getId());
-        if (opInstituicao.isPresent()) {
-            instituicao = opInstituicao.get();
-            periodoLetivo.setInstituicao(instituicao);
-            periodoLetivoService.insert(periodoLetivo);
-            attrs.addFlashAttribute("mensagem", "PeriodoLetivo cadastrado com sucesso!");
-            model.setViewName("redirect:periodos");
-        } else {
-            model.addObject("mensagem",
-                    "PeriodoLetivo com id = " + periodoLetivo.getInstituicao().getId() + " não encontrado.");
-            model.setViewName("periodos/form");
-        }
-        return model;
+    @Transactional
+    public String cadastrePeriodo(PeriodoLetivo periodoLetivo, Model model, RedirectAttributes attr) {
+        periodoLetivoService.insert(periodoLetivo);
+        attr.addFlashAttribute("mensagem", "PeriodoLetivo cadastrado com sucesso!");
+        return "redirect:/periodos";
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView listPeriodos(ModelAndView model) {
-        model.addObject("periodoLetivo", "periodoLetivo");
+        model.addObject("periodoLetivo", "listar");
         model.addObject("periodoLetivo", periodoLetivoService.list());
         model.setViewName("periodos/list");
         return model;
