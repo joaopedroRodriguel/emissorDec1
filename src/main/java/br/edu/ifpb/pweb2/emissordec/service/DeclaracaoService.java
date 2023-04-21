@@ -1,7 +1,6 @@
 package br.edu.ifpb.pweb2.emissordec.service;
 
 import br.edu.ifpb.pweb2.emissordec.model.Declaracao;
-import br.edu.ifpb.pweb2.emissordec.model.Estudante;
 import br.edu.ifpb.pweb2.emissordec.repository.DeclaracaoRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

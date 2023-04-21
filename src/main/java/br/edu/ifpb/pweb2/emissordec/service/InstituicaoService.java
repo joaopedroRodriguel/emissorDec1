@@ -1,6 +1,5 @@
 package br.edu.ifpb.pweb2.emissordec.service;
 
-import br.edu.ifpb.pweb2.emissordec.model.Estudante;
 import br.edu.ifpb.pweb2.emissordec.model.Instituicao;
 import br.edu.ifpb.pweb2.emissordec.repository.InstituicaoRepository;
 import org.springframework.beans.BeanUtils;
