@@ -35,4 +35,8 @@ public class Instituicao {
             targetEntity=PeriodoLetivo.class,
             cascade=CascadeType.ALL)
     private List<PeriodoLetivo> periodos;
+
+    public Instituicao(PeriodoLetivo periodoLetivo) {
+        this.periodos = (List<PeriodoLetivo>) periodoLetivo;
+    }
 }
