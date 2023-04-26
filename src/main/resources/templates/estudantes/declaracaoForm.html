@@ -1,0 +1,36 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:insert="~{layout/layout}"
+    th:with="titulo='Cadastro de Declaração'">
+
+<body>
+    <div layout:fragment="content">
+        <div class="card-header">
+            <h1 th:text="${titulo}"></h1>
+        </div>
+        <div class="card-body">
+                <form th:action="@{/declaracoes}" method="POST" th:object="${declaracao}">
+                    <input type="hidden" field="*{id}" name="id" class="form-control"/>
+
+                    <label for="dataRecebimento">Data de Recebimento</label>
+                    <input type="datetime-local" field="*{dataRecebimento}" name="dataRecebimento" class="form-control"/> <br /><br />
+
+                    <label for="obs">Observação</label>
+                    <textarea cols="50" rows="5" name="obs"> 
+                        Coloque aqui alguma observação.
+                    </textarea>
+                    <br /><br />
+
+                    <label for="estudante">Estudante</label>
+                    <select field="*{estudante.id}">
+                        <option th:each="est : ${estudantesItens}" th:value="${est.id}" th:label="${est.nome}" />
+                    </select>
+                    <br /><br />
+
+
+                    <button type="submit" class="btn btn-purple">Salvar</button>
+                    <button class="btn btn-secundary"><a th:href="@{/}">Cancelar</a></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

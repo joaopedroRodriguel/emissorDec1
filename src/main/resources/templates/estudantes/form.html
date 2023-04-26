@@ -1,40 +1,33 @@
-<!DOCTYPE html>
-<html lang="pt_BR" xmlns:th="www.thymeleaf.org">
-<head th:insert="~{../fragments/base :: headfiles}"></head>
-<body class="bg-dark">
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:insert="~{layout/layout}"
+    th:with="titulo='Cadastro de Estudantes'">
 
-    <div th:replace="~{../fragments/base :: logo}"></div>
-    <div class="container">
+<body>
+    <div layout:fragment="content">
+        <div class="card-header">
+            <h1 th:text="${titulo}"></h1>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/estudantes}" method="POST" th:object="${estudante}">
+                <input type="hidden" th:field="*{id}" class="form-control" />
 
-        <div th:text="${mensagem}" th:if="${mensagem ne null}" class="alert alert-success"></div>
+                <label for="estudante">Nome</label>
+                <input type="text" th:field="*{nome}" name="nome" class="form-control" /> <br /><br />
 
-        <div class="card bg-dark">
-            <div class="card-header">
-                <h1>Cadastro de Estudante</h1>
-            </div>
-            <div class="card-body">
-                <form th:action="@{/estudantes}" method="POST" th:object="${estudante}">
-                    <input type="hidden" th:field="*{id}" class="form-control"/>
+                <label for="estudante">Matrícula</label>
+                <input type="text" th:field="*{matricula}" name="matricula" class="form-control" /> <br /><br />
 
-                    <label for="estudante">Nome</label>
-                    <input type="text" th:field="*{nome}" name="nome" class="form-control"/> <br /><br />
-
-                    <label for="estudante">Matrícula</label>
-                    <input type="text" th:field="*{matricula}" name="matricula" class="form-control"/> <br /><br />
-
-                    <label for="instituicao">Instituição</label>
-                    <select th:field="*{instituicao.id}">
-                        <option th:each="inst : ${instituicaoItens}" th:value="${inst.id}" th:label="${inst.nome}" />
-                    </select>
-                    <br /><br />
+                <label for="instituicao">Instituição</label>
+                <select th:field="*{instituicao.id}">
+                    <option th:each="inst : ${instituicaoItens}" th:value="${inst.id}" th:label="${inst.nome}" />
+                </select>
+                <br /><br />
 
 
-                    <button type="submit" class="btn btn-purple">Salvar</button>
-                    <button th:href="@{/emissorDec}" class="btn btn-secundary">Cancelar</button>
-                </form>
-            </div>
+                <button type="submit" class="btn btn-purple">Salvar</button>
+                <button class="btn btn-secundary"><a th:href="@{/}">Cancelar</a></button>
+            </form>
         </div>
     </div>
-    <footer th:replace="~{../fragments/base :: footer}"></footer>
 </body>
+
 </html>

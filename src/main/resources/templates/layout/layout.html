@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt_BR" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:replace="~{/fragments/base :: headfiles(${titulo})}"></head>
+
+<body class="bg-dark">
+    <div th:replace="~{/fragments/base :: logo}"></div>
+    <div class="container">
+
+        <div th:text="${mensagem}" th:if="${mensagem ne null}" class="alert alert-success"></div>
+
+        <div class="card bg-dark">
+
+            <div layout:fragment="content">
+                <!-- Corpo da página entra aqui -->
+                <h1>Conteúdo não definido para o layout!</h1>
+            </div>
+        </div>
+    </div>
+    <footer th:replace="~{/fragments/base :: footer}"></footer>
+</body>
+
+</html>
