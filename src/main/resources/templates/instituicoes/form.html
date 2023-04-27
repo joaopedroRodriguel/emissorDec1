@@ -1,12 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:insert="~{layout/layout}"
+    th:with="titulo='Cadastro de Instituições'">
+<!---->
 <body>
-    
+    <div layout:fragment="content">
+        <div class="card-header">
+            <h1 th:text="${titulo}"></h1>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/instituicoes}" method="POST" th:object="${instituicao}">
+                <input type="hidden" th:field="*{id}" class="form-control" />
+
+                <label for="instituicao">Nome</label>
+                <input type="text" th:field="*{nome}" name="nome" class="form-control" /> <br /><br />
+
+                <label for="instituicao">Sigla</label>
+                <input type="text" th:field="*{sigla}" name="sigla" class="form-control" /> <br /><br />
+
+                <label for="instituicao">Telefone</label>
+                <input type="text" th:field="*{fone}" name="telefone" class="form-control" /> <br /><br />
+               
+                <br /><br />
+
+
+                <button type="submit" class="btn btn-purple">Salvar</button>
+                <button class="btn btn-secundary"><a th:href="@{/}">Cancelar</a></button>
+            </form>
+        </div>
+    </div>
 </body>
+
 </html>
