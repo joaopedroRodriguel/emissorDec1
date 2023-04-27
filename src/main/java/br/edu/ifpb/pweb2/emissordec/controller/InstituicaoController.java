@@ -42,7 +42,7 @@ public class InstituicaoController {
     }
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView save(Instituicao instituicao, ModelAndView model, RedirectAttributes attrs) {
-        mensagem = this.instituicaoService.insert(instituicao);
+        instituicaoService.insert(instituicao);
         model.setViewName("redirect:instituicoes");
         attrs.addFlashAttribute("mensagem", mensagem);
         return model;

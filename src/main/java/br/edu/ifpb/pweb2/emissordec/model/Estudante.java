@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+
 import java.util.List;
 
 @Data
@@ -21,8 +23,10 @@ public class Estudante {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Campo Obrigatório!")
     private String nome;
-
+    
+    @NotBlank(message = "Campo Obrigatório!")
     private String matricula;
 
     @ManyToOne

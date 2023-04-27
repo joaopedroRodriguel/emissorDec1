@@ -6,7 +6,9 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import javax.validation.constraints.NotBlank;
+
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -21,7 +23,8 @@ public class Declaracao {
     private Long id;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDateTime dataRecebimento;
+    @NotBlank(message = "Campo Obrigatório!")
+    private Date dataRecebimento;
 
     private String observacao;
 

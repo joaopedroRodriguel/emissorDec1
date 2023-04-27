@@ -12,9 +12,11 @@
 
                 <label for="estudante">Nome</label>
                 <input type="text" th:field="*{nome}" name="nome" class="form-control" /> <br /><br />
+                <p th:if="${#fields.hasErrors('nome')}" th:errorclass="error" th:errors="*{nome}"></p>
 
                 <label for="estudante">Matrícula</label>
                 <input type="text" th:field="*{matricula}" name="matricula" class="form-control" /> <br /><br />
+                <p th:if="${#fields.hasErrors('matricula')}" th:errorclass="error" th:errors="*{matricula}"></p>
 
                 <label for="instituicao">Instituição</label>
                 <select th:field="*{instituicao.id}">

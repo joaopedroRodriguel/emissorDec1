@@ -12,7 +12,7 @@
             </form>
             <br />
 
-            <div th:if="${not #lists.isEmpty(declaracoes)}" class="card">
+            <div class="card">
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
@@ -20,6 +20,7 @@
                             <th>Observação</th>
                             <th>Estudante</th>
                             <th></th>
+                            <th>Periodo</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -28,10 +29,15 @@
                                 <a th:href="@{/declaracoes/edite/{id}(id=${declaracao.id})}"
                                     th:text="${declaracao.dataRecebimento}"></a>
                             </td>
-                            <td th:text="${declaracao.observacao}"></td>
+                            <td th:text="${#strings.substring(declaracao.observacao, 0, 5) + '...'}" th:if="${declaracao.observacao != null}"></td>
+                            <td th:if="${declaracao.observacao == null}">Não possui obsv.</td>
                             <td th:text="${declaracao.estudante.nome}" th:if="${declaracao.estudante != null}">
                             </td>
                             <td th:if="${declaracao.estudante == null}">Sem Estudante cadastrado</td>
+                            <td>
+                            <td th:text="${declaracao.periodoLetivo.ano}" th:if="${declaracao.periodoLetivo != null}">
+                            </td>
+                            <td th:if="${declaracao.periodoLetivo == null}">Sem Periodo Letivo cadastrado</td>
                             <td>
                                 <form th:action="@{/declaracoes/excluir/{id}(id=${declaracao.id})}">
                                     <button type="submit" class="btn btn-purple btn-sm">Excluir</button>

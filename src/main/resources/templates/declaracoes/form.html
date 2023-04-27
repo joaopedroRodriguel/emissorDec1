@@ -1,0 +1,41 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:insert="~{layout/layout}"
+    th:with="titulo='Cadastro de Declaração'">
+
+<body>
+    <div layout:fragment="content">
+        <div class="card-header">
+            <h1 th:text="${titulo}"></h1>
+        </div>
+        <div class="card-body">
+                <form th:action="@{/declaracoes}" method="POST" th:object="${declaracao}">
+                    <input type="hidden" th:field="*{id}" name="id" class="form-control"/>
+
+                    <label for="dataRecebimento">Data de Recebimento</label>
+                    <input type="datetime-local" th:field="*{dataRecebimento}" class="form-control"/> <br /><br />
+                    <p th:if="${#fields.hasErrors('dataRecebimento')}" th:errorclass="error" th:errors="*{dataRecebimento}"></p>
+
+                    <label for="observacao">Observação</label>
+                    <textarea cols="50" rows="5" th:field="*{observacao}" class="form-control" placeholder="Coloque aqui alguma observação.">                        
+                    </textarea>
+                    <br /><br />
+
+                    <label for="estudante">Estudante</label>
+                    <select th:field="*{estudante.id}" class="form-control" id="option-card">
+                        <option th:each="est : ${estudantesItens}" th:value="${est.id}" th:text="${est.nome}"/>
+                    </select>
+                    <br /><br />
+
+                    <label for="periodoLetivo">Período Letivo</label>
+                    <select th:field="*{periodoLetivo.id}">
+                        <option th:each="pl : ${periodoLetivoItens}" th:value="${pl.id}" th:text="${pl.ano + '.' + pl.periodo}" class="form-control"/>
+                    </select>
+                    <br /><br />
+
+                    <button type="submit" class="btn btn-purple">Salvar</button>
+                    <button class="btn btn-secundary"><a th:href="@{/}">Cancelar</a></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

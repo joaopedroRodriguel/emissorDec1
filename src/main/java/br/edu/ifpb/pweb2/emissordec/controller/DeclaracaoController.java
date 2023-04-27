@@ -12,6 +12,7 @@ import br.edu.ifpb.pweb2.emissordec.service.PeriodoLetivoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 
 import java.util.List;
 import java.util.Optional;
@@ -53,13 +55,26 @@ public class DeclaracaoController {
         return estudanteService.list();
     }
 
+    @ModelAttribute("periodoLetivoItens")
+    public List<PeriodoLetivo> getPeriodoLetivos() {
+        return periodoLetivoService.list();
+    }
+
     // Falta terminar esse método, estou tendo dúvidas em relação ao relacionamento
     @RequestMapping(method = RequestMethod.POST)
     @Transactional
-    public ModelAndView cadastreDeclaracao(Declaracao declaracao, ModelAndView model, RedirectAttributes attr) {
-        if (declaracao.getPeriodoLetivo() == null){
-            Optional<PeriodoLetivo>  pl = periodoLetivoService.search(declaracao.getPeriodoLetivo().getId());
-            declaracao.setPeriodoLetivo(pl.get());
+    public ModelAndView cadastreDeclaracao(@Valid Declaracao declaracao, ModelAndView model, BindingResult result, RedirectAttributes attr) {
+        // if (declaracao.getPeriodoLetivo() != null){
+        //     Optional<PeriodoLetivo>  pl = periodoLetivoService.search(declaracao.getPeriodoLetivo().getId());
+        //     declaracao.setPeriodoLetivo(pl.get());
+        // }
+        // if (declaracao.getEstudante() != null){
+        //     Optional<Estudante>  est = estudanteService.search(declaracao.getEstudante().getId());
+        //     declaracao.setEstudante(est.get());
+        // }
+        if (result.hasErrors()) {
+            model.setViewName("declaracoes/form");
+            return model;
         }
         if (declaracao.getId() == null) {
             attr.addFlashAttribute("mensagem", "Declaração cadastrada com sucesso!");
@@ -72,10 +87,10 @@ public class DeclaracaoController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView listeDeclaracoes(ModelAndView model) {
-        model.setViewName("declaracoes/list");
+    public ModelAndView listeDeclaracoes(ModelAndView model) {       
 //        model.addObject("declaracao", "listar");
-        model.addObject("declaracao", declaracaoService.list());
+        model.addObject("declaracoes", declaracaoService.list());
+        model.setViewName("declaracoes/list");
         return model;
     }
 

@@ -37,3 +37,8 @@
 .btn-secundary{
     color: white;
 }
+
+#option-card{
+    width: 100px;
+    background-color: #c905fa;
+}
