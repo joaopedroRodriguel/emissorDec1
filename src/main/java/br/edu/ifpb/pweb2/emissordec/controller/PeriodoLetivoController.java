@@ -8,6 +8,7 @@ import br.edu.ifpb.pweb2.emissordec.service.PeriodoLetivoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,23 +27,29 @@ public class PeriodoLetivoController {
 
     @Autowired
     PeriodoLetivoService periodoLetivoService;
-
-
-
     @RequestMapping("/form")
-    public ModelAndView getForm(ModelAndView model) {
-        model.addObject("periodoLetivo", new PeriodoLetivo(new Instituicao()));
-        model.addObject("periodoLetivo", "cadastrar");
-        model.setViewName("periodos/form");
-        return model;
+    public ModelAndView getForm(PeriodoLetivo periodoLetivo, ModelAndView mav) {
+        mav.setViewName("periodos/form");
+        mav.addObject("periodoletivo", periodoLetivo);
+        return mav;
     }
-    // Falta terminar esse método, estou tendo dúvidas em relação ao relacionamento!!!
+
     @RequestMapping(method = RequestMethod.POST)
-    @Transactional
-    public String cadastrePeriodo(PeriodoLetivo periodoLetivo, Model model, RedirectAttributes attr) {
+    public ModelAndView save(@Valid PeriodoLetivo periodoLetivo, ModelAndView mav, BindingResult validation, RedirectAttributes attrs) {
+        if (validation.hasErrors()) {
+            mav.setViewName("periodos/form");
+            return mav;
+        }
+        if (periodoLetivo.getId() == null) {
+            attrs.addFlashAttribute("mensagem", "periodoLetivo cadastrado com sucesso!");
+
+        } else {
+            attrs.addFlashAttribute("mensagem", "periodoLetivo editado com sucesso!");
+        }
         periodoLetivoService.insert(periodoLetivo);
-        attr.addFlashAttribute("mensagem", "PeriodoLetivo cadastrado com sucesso!");
-        return "redirect:/periodos";
+        mav.setViewName("redirect:periodos");
+        return mav;
+
     }
 
     @RequestMapping(method = RequestMethod.GET)

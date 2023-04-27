@@ -43,11 +43,10 @@ public class DeclaracaoController {
     InstituicaoService instituicaoService;
 
     @RequestMapping("/form")
-    public ModelAndView getForm(ModelAndView model) {
-        model.addObject("declaracao", new Declaracao());
-//        model.addObject("declaracao", "cadastrar");
-        model.setViewName("declaracoes/form");
-        return model;
+    public ModelAndView getForm(Declaracao declaracao, ModelAndView mav) {
+        mav.setViewName("declaracoes/form");
+        mav.addObject("declaracao", declaracao);
+        return mav;
     }
 
     @ModelAttribute("estudantesItens")
@@ -55,35 +54,22 @@ public class DeclaracaoController {
         return estudanteService.list();
     }
 
-    @ModelAttribute("periodoLetivoItens")
-    public List<PeriodoLetivo> getPeriodoLetivos() {
-        return periodoLetivoService.list();
-    }
-
-    // Falta terminar esse método, estou tendo dúvidas em relação ao relacionamento
     @RequestMapping(method = RequestMethod.POST)
-    @Transactional
-    public ModelAndView cadastreDeclaracao(@Valid Declaracao declaracao, ModelAndView model, BindingResult result, RedirectAttributes attr) {
-        // if (declaracao.getPeriodoLetivo() != null){
-        //     Optional<PeriodoLetivo>  pl = periodoLetivoService.search(declaracao.getPeriodoLetivo().getId());
-        //     declaracao.setPeriodoLetivo(pl.get());
-        // }
-        // if (declaracao.getEstudante() != null){
-        //     Optional<Estudante>  est = estudanteService.search(declaracao.getEstudante().getId());
-        //     declaracao.setEstudante(est.get());
-        // }
-        if (result.hasErrors()) {
-            model.setViewName("declaracoes/form");
-            return model;
+    public ModelAndView save(@Valid Declaracao declaracao, ModelAndView mav, BindingResult validation, RedirectAttributes attrs) {
+        if (validation.hasErrors()) {
+            mav.setViewName("declaracoes/form");
+            return mav;
         }
         if (declaracao.getId() == null) {
-            attr.addFlashAttribute("mensagem", "Declaração cadastrada com sucesso!");
+            attrs.addFlashAttribute("mensagem", "Declaracao cadastrada com sucesso!");
+
         } else {
-            attr.addFlashAttribute("mensagem", "Declaração editada com sucesso!");
+            attrs.addFlashAttribute("mensagem", "Declaracao editada com sucesso!");
         }
         declaracaoService.insert(declaracao);
-        model.setViewName("redirect:declaracoes");
-        return model;
+        mav.setViewName("redirect:declaracoes");
+        return mav;
+
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -123,5 +109,10 @@ public class DeclaracaoController {
         model.addObject("declaracao", declaracao);
         return model;
 
+    }
+
+    @ModelAttribute("periodoLetivoItens")
+    public List<PeriodoLetivo> getPeriodoLetivos() {
+        return periodoLetivoService.list();
     }
 }
