@@ -30,40 +30,28 @@ public class EstudanteController {
     InstituicaoService instituicaoService;
 
     @RequestMapping("/form")
-    public ModelAndView getForm(ModelAndView model) {
-        model.addObject("estudante", new Estudante(new Instituicao()));
-        //model.addObject("titulo", "cadastrado");
-        model.setViewName("estudantes/form");
-        return model;
+    public ModelAndView getForm(Estudante estudante, ModelAndView mav) {
+        mav.setViewName("estudantes/form");
+        mav.addObject("estudante", estudante);
+        return mav;
     }
-
-    @ModelAttribute("instituicaoItens")
-    public List<Instituicao> getInstituicoes() {
-        return instituicaoService.list();
-    }
-
     @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView save(@Valid Estudante estudante, ModelAndView model, BindingResult result, RedirectAttributes attrs) {
-    //    if (estudante.getInstituicao() != null) {
-    //        Optional<Instituicao> opInstituicao = instituicaoService.search(estudante.getInstituicao().getId());
-    //        estudante.setInstituicao(opInstituicao.get());
-        if (result.hasErrors()){
-            model.setViewName("estudantes/form");
-            return model;
+    public ModelAndView save(@Valid Estudante estudante, ModelAndView mav, BindingResult validation, RedirectAttributes attrs) {
+        if (validation.hasErrors()) {
+            mav.setViewName("estudantes/form");
+            return mav;
         }
-       
         if (estudante.getId() == null) {
             attrs.addFlashAttribute("mensagem", "Estudante cadastrado com sucesso!");
+
         } else {
             attrs.addFlashAttribute("mensagem", "Estudante editado com sucesso!");
         }
         estudanteService.insert(estudante);
-        
-        model.setViewName("redirect:estudantes");
-
-        return model;
-
+        mav.setViewName("redirect:estudantes");
+        return mav;
     }
+
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView listEstudantes(ModelAndView model) {
@@ -102,5 +90,10 @@ public class EstudanteController {
         model.addObject("estudante", estudante.get());
         model.addObject("titulo", "editado");
         return model;
+    }
+
+    @ModelAttribute("instituicaoItens")
+    public List<Instituicao> getInstituicoes() {
+        return instituicaoService.list();
     }
 }
