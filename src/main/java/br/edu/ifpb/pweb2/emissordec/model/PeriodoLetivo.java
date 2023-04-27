@@ -1,10 +1,13 @@
 package br.edu.ifpb.pweb2.emissordec.model;
 
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -19,13 +22,16 @@ public class PeriodoLetivo {
     @Column(name="periodo_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @NotBlank(message = "Campo Obrigatório")
     private int ano;
 
+    @NotBlank(message = "Campo Obrigatório")
     private int periodo;
-
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @NotBlank(message = "Campo Obrigatório")
     private LocalDate inicio;
-
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @NotBlank(message = "Campo Obrigatório")
     private LocalDate fim;
 
     @OneToMany(mappedBy = "periodoLetivo",

@@ -6,6 +6,7 @@ import br.edu.ifpb.pweb2.emissordec.service.EstudanteService;
 import br.edu.ifpb.pweb2.emissordec.service.InstituicaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,37 +29,29 @@ public class EstudanteController {
     InstituicaoService instituicaoService;
 
     @RequestMapping("/form")
-    public ModelAndView getForm(ModelAndView model) {
-        model.addObject("estudante", new Estudante(new Instituicao()));
-        model.addObject("titulo", "cadastrado");
-        model.setViewName("estudantes/form");
-        return model;
+    public ModelAndView getForm(Estudante estudante, ModelAndView mav) {
+        mav.setViewName("estudantes/form");
+        mav.addObject("estudante", estudante);
+        return mav;
     }
-
-    @ModelAttribute("instituicaoItens")
-    public List<Instituicao> getInstituicoes() {
-        return instituicaoService.list();
-    }
-
     @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView save(Estudante estudante, ModelAndView model, RedirectAttributes attrs) {
-        if (estudante.getInstituicao() != null) {
-            Optional<Instituicao> opInstituicao = instituicaoService.search(estudante.getInstituicao().getId());
-            estudante.setInstituicao(opInstituicao.get());
+    public ModelAndView save(@Valid Estudante estudante, ModelAndView mav, BindingResult validation, RedirectAttributes attrs) {
+        if (validation.hasErrors()) {
+            mav.setViewName("estudantes/form");
+            return mav;
         }
-       
         if (estudante.getId() == null) {
             attrs.addFlashAttribute("mensagem", "Estudante cadastrado com sucesso!");
+
         } else {
             attrs.addFlashAttribute("mensagem", "Estudante editado com sucesso!");
         }
         estudanteService.insert(estudante);
-        
-        model.setViewName("redirect:estudantes");
-
-        return model;
-
+        mav.setViewName("redirect:estudantes");
+        return mav;
     }
+
+
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView listEstudantes(ModelAndView model) {
@@ -96,5 +90,10 @@ public class EstudanteController {
         model.addObject("estudante", estudante.get());
         model.addObject("titulo", "editado");
         return model;
+    }
+
+    @ModelAttribute("instituicaoItens")
+    public List<Instituicao> getInstituicoes() {
+        return instituicaoService.list();
     }
 }

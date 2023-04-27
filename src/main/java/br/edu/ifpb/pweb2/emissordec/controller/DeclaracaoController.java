@@ -1,11 +1,13 @@
 package br.edu.ifpb.pweb2.emissordec.controller;
 
 import br.edu.ifpb.pweb2.emissordec.model.Declaracao;
+import br.edu.ifpb.pweb2.emissordec.model.Estudante;
 import br.edu.ifpb.pweb2.emissordec.model.Instituicao;
 import br.edu.ifpb.pweb2.emissordec.service.DeclaracaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
@@ -23,20 +26,28 @@ public class DeclaracaoController {
     DeclaracaoService declaracaoService;
 
     @RequestMapping("/form")
-    public ModelAndView getForm(ModelAndView model) {
-        model.addObject("declaracao", new Declaracao());
-        model.addObject("declaracao", "cadastrar");
-        model.setViewName("declaracoes/form");
-        return model;
+    public ModelAndView getForm(Declaracao declaracao, ModelAndView mav) {
+        mav.setViewName("declaracoes/form");
+        mav.addObject("declaracao", declaracao);
+        return mav;
     }
 
-    // Falta terminar esse método, estou tendo dúvidas em relação ao relacionamento
     @RequestMapping(method = RequestMethod.POST)
-    @Transactional
-    public String cadastreDeclaracao(Declaracao declaracao, Model model, RedirectAttributes attr) {
+    public ModelAndView save(@Valid Declaracao declaracao, ModelAndView mav, BindingResult validation, RedirectAttributes attrs) {
+        if (validation.hasErrors()) {
+            mav.setViewName("declaracoes/form");
+            return mav;
+        }
+        if (declaracao.getId() == null) {
+            attrs.addFlashAttribute("mensagem", "Declaracao cadastrada com sucesso!");
+
+        } else {
+            attrs.addFlashAttribute("mensagem", "Declaracao editada com sucesso!");
+        }
         declaracaoService.insert(declaracao);
-        attr.addFlashAttribute("mensagem", "Declaracao cadastrada com sucesso!");
-        return "redirect:/declaracoes";
+        mav.setViewName("redirect:declaracoes");
+        return mav;
+
     }
 
     @RequestMapping(method = RequestMethod.GET)

@@ -10,6 +10,7 @@ import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,34 +34,28 @@ public class InstituicaoController {
     PeriodoLetivoService periodoLetivoService;
 
     @RequestMapping("/form")
-    public ModelAndView getForm(ModelAndView model) {
-        model.addObject("instituicao", new Instituicao(new PeriodoLetivo()));
-        model.addObject("titulo", "cadastrado");
-        model.setViewName("instituicoes/form");
-        return model;
+    public ModelAndView getForm(Instituicao instituicao,ModelAndView mav) {
+        mav.setViewName("instituicoes/form");
+        mav.addObject("instituicao", instituicao);
+        return mav;
     }
 
-    @ModelAttribute("periodosItens")
-    public List<PeriodoLetivo> getPeriodos() {
-        return periodoLetivoService.list();
-    }
+
     @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView save(Instituicao instituicao, ModelAndView model, RedirectAttributes attrs) {
-        if (instituicao.getPeriodos() != null) {
-            Optional<PeriodoLetivo> opPeriodoLetivo = periodoLetivoService.search(instituicao.getPeriodos().get());
-            instituicao.setPeriodos(opPeriodoLetivo.get());
+    public ModelAndView save(@Valid Instituicao instituicao, ModelAndView mav, BindingResult validation, RedirectAttributes attrs) {
+        if (validation.hasErrors()) {
+            mav.setViewName("instituicoes/form");
+            return mav;
         }
-
         if (instituicao.getId() == null) {
-            attrs.addFlashAttribute("mensagem", "Instituicao cadastrada com sucesso!");
+            attrs.addFlashAttribute("mensagem", "Instituicao cadastrado com sucesso!");
+
         } else {
             attrs.addFlashAttribute("mensagem", "Instituicao editada com sucesso!");
         }
         instituicaoService.insert(instituicao);
-
-        model.setViewName("redirect:instituicoes");
-
-        return model;
+        mav.setViewName("redirect:instituicoes");
+        return mav;
 
     }
 
@@ -102,13 +98,9 @@ public class InstituicaoController {
         return model;
     }
 
-
-
-
-
-
-
-
-
+    @ModelAttribute("periodosItens")
+    public List<PeriodoLetivo> getPeriodos() {
+        return periodoLetivoService.list();
+    }
 
 }

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Data
@@ -19,11 +20,11 @@ public class Instituicao {
     @Column(name="instituicao_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @NotBlank(message="Campo obrigatório!")
     private String nome;
-
+    @NotBlank(message="Campo obrigatório!")
     private String sigla;
-
+    @NotBlank(message="Campo obrigatório!")
     private String fone;
 
     @OneToMany(mappedBy = "instituicao",

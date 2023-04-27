@@ -20,7 +20,7 @@ public class Declaracao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDateTime dataRecebimento;
 
     private String observacao;
