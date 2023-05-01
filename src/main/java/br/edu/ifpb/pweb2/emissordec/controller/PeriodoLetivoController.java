@@ -58,25 +58,25 @@ public class PeriodoLetivoController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView listPeriodos(ModelAndView model) {
-        model.addObject("periodoLetivo", "listar");
-        model.addObject("periodoLetivo", periodoLetivoService.list());
-        model.setViewName("periodos/list");
-        return model;
+    public ModelAndView listPeriodos(ModelAndView mav) {
+        mav.addObject("periodoLetivo", "listar");
+        mav.addObject("periodoLetivo", periodoLetivoService.list());
+        mav.setViewName("periodos/list");
+        return mav;
     }
 
     @RequestMapping("/{id}")
-    public ModelAndView getPeriodoById(@PathVariable(value = "id") Long id, ModelAndView model) {
-        model.addObject("periodoLetivo", "periodoLetivo");
+    public ModelAndView getPeriodoById(@PathVariable(value = "id") Long id, ModelAndView mav) {
+        mav.addObject("periodoLetivo", "periodoLetivo");
         Optional<PeriodoLetivo> opPeriodoLetivo = periodoLetivoService.search((id));
         if (opPeriodoLetivo.isPresent()) {
-            model.setViewName("periodos/form");
-            model.addObject("periodoLetivo", opPeriodoLetivo.get());
+            mav.setViewName("periodos/form");
+            mav.addObject("periodoLetivo", opPeriodoLetivo.get());
         } else {
-            model.setViewName("periodos/list");
-            model.addObject("mensagem", "PeriodoLetivo com id " + id + " não encontrado.");
+            mav.setViewName("periodos/list");
+            mav.addObject("mensagem", "PeriodoLetivo com id " + id + " não encontrado.");
         }
-        return model;
+        return mav;
     }
 
     @RequestMapping("/excluir/{id}")
@@ -88,11 +88,11 @@ public class PeriodoLetivoController {
     }
 
     @RequestMapping(value = "/edite/{id}")
-    public ModelAndView editePeriodo(@PathVariable("id") Long id, PeriodoLetivo periodoLetivo, ModelAndView model) {
-        model.setViewName("periodos/form");
+    public ModelAndView editePeriodo(@PathVariable("id") Long id, PeriodoLetivo periodoLetivo, ModelAndView mav) {
+        mav.setViewName("periodos/form");
         PeriodoLetivo periodo = periodoLetivoService.update(id, periodoLetivo);
-        model.addObject("periodoLetivo", periodo);
-        return model;
+        mav.addObject("periodoLetivo", periodo);
+        return mav;
 
     }
 

@@ -62,25 +62,25 @@ public class InstituicaoController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView listInstituicoes(ModelAndView model) {
+    public ModelAndView listInstituicoes(ModelAndView mav) {
         //model.addObject("instituicao", "listar");
-        model.addObject("instituicoes", instituicaoService.list());
-        model.setViewName("instituicoes/list");
-        return model;
+        mav.addObject("instituicoes", instituicaoService.list());
+        mav.setViewName("instituicoes/list");
+        return mav;
     }
 
     @RequestMapping("/{id}")
-    public ModelAndView getInstituicaoById(@PathVariable(value = "id") Long id, ModelAndView model) {
-        model.addObject("instituicao", "encontrado");
+    public ModelAndView getInstituicaoById(@PathVariable(value = "id") Long id, ModelAndView mav) {
+        mav.addObject("instituicao", "encontrado");
         Optional<Instituicao> opInstituicao = instituicaoService.search((id));
         if (opInstituicao.isPresent()) {
-            model.setViewName("instituicoes/form");
-            model.addObject("instituicao", opInstituicao.get());
+            mav.setViewName("instituicoes/form");
+            mav.addObject("instituicao", opInstituicao.get());
         } else {
-            model.setViewName("instituicoes/list");
-            model.addObject("mensagem", "instituicao com id " + id + " não encontrado.");
+            mav.setViewName("instituicoes/list");
+            mav.addObject("mensagem", "instituicao com id " + id + " não encontrado.");
         }
-        return model;
+        return mav;
     }
 
     @RequestMapping("/excluir/{id}")
@@ -91,14 +91,6 @@ public class InstituicaoController {
         return mav;
     }
 
-    @RequestMapping(value = "/edite/{id}")
-    public ModelAndView editeInstituicao(@PathVariable("id") Long id, Instituicao newInstituicao, ModelAndView model) {
-        model.setViewName("instituicoes/form");
-        Optional<Instituicao> instituicao = instituicaoService.search(id);
-        model.addObject("instituicao", instituicao.get());
-        model.addObject("titulo", "editado");
-        return model;
-    }
     @ModelAttribute("periodosItens")
     public List<PeriodoLetivo> getPeriodos() {
         return periodoLetivoService.list();

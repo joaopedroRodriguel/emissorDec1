@@ -37,6 +37,10 @@ public class Instituicao {
             cascade=CascadeType.ALL)
     private List<PeriodoLetivo> periodos;
 
+    public void addPeriodo(PeriodoLetivo newPeriodo) {
+        this.periodos.add(newPeriodo);
+    }
+
     public Instituicao(PeriodoLetivo periodoLetivo) {
         this.periodos = (List<PeriodoLetivo>) periodoLetivo;
     }
