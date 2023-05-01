@@ -8,12 +8,8 @@
         </div>
         <div class="card-body">
                 <form th:action="@{/save}" method="POST" th:object="${periodoLetivo}">
-<<<<<<< HEAD
-                    <input type="hidden" th:field="*{id}" name="id" class="form-control"/>                    
-=======
-                    <input type="hidden" th:field="*{id}" class="form-control"/>                    
->>>>>>> 9a8f5b39e51ffd7b5fba79bf47758f753ceedaaa
-
+                    <input type="hidden" th:field="*{id}" name="id" class="form-control"/> 
+                    
                     <label for="periodo">Ano</label>
                     <input type="number" th:field="*{ano}" name="Ano" class="form-control" /> <br /><br />
 
