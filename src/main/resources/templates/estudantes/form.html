@@ -19,8 +19,8 @@
                 <p th:if="${#fields.hasErrors('matricula')}" th:errorclass="error" th:errors="*{matricula}"></p>
 
                 <label for="instituicao">Instituição</label>
-                <select th:field="*{instituicao.id}">
-                    <option th:each="inst : ${instituicaoItens}" th:value="${inst.id}" th:label="${inst.nome}" />
+                <select th:field="*{instituicao.id}" class="form-control" id="option-card">
+                    <option th:each="inst : ${instituicaoItens}" th:value="${inst.id}" th:text="${inst.nome}" />
                 </select>
                 <br /><br />
 

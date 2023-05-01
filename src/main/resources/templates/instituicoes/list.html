@@ -17,8 +17,8 @@
                     <thead>
                         <tr>
                             <th>Nome</th>
-                            <th>Matricula</th>
-                            <th>Instituição</th>
+                            <th>Sigla</th>
+                            <th>Fone</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -28,10 +28,8 @@
                                 <a th:href="@{/instituicoes/edite/{id}(id=${instituicao.id})}"
                                     th:text="${instituicao.nome}"></a>
                             </td>
-                            <td th:text="${instituicao.matricula}"></td>
-                            <td th:text="${instituicao.instituicao.nome}" th:if="${instituicao.instituicao != null}">
-                            </td>
-                            <td th:if="${instituicao.instituicao == null}">Sem Instituição cadastrada</td>
+                            <td th:text="${instituicao.sigla}"></td>
+                            <td th:text="${instituicao.fone}"></td>
                             <td>
                                 <form th:action="@{/instituicoes/excluir/{id}(id=${instituicao.id})}">
                                     <button type="submit" class="btn btn-purple btn-sm">Excluir</button>

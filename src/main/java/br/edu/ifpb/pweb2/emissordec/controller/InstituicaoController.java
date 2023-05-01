@@ -39,6 +39,11 @@ public class InstituicaoController {
         return mav;
     }
 
+    @ModelAttribute("menu")
+    public String selectMenu() {
+        return "instituicao";
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView save(@Valid Instituicao instituicao, ModelAndView mav, BindingResult validation, RedirectAttributes attrs) {
         if (validation.hasErrors()) {

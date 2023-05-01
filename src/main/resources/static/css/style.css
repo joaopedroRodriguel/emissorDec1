@@ -3,6 +3,11 @@
     text-align: center;
 }
 
+.home{
+    color: White;
+    text-align: center;
+}
+
 .logo-bar img {
     vertical-align: bottom;
     margin-right: 5px;
@@ -38,7 +43,22 @@
     color: white;
 }
 
-#option-card{
-    width: 100px;
+.bg-blue{
     background-color: #c905fa;
+}
+
+#option-card{
+    width: 200px;
+    background-color: #c905fa;
+}
+
+.menu{
+    margin-left: 20px;
+}
+
+.menu-item{
+    color: white;
+}
+.menu-item:hover {
+    color: black;
 }

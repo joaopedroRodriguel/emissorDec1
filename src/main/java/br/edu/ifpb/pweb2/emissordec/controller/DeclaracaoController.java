@@ -54,6 +54,11 @@ public class DeclaracaoController {
         return estudanteService.list();
     }
 
+    @ModelAttribute("menu")
+    public String selectMenu() {
+        return "declaracao";
+    }
+    
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView save(@Valid Declaracao declaracao, ModelAndView mav, BindingResult validation, RedirectAttributes attrs) {
         if (validation.hasErrors()) {

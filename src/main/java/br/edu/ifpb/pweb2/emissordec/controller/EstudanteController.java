@@ -52,6 +52,10 @@ public class EstudanteController {
         return mav;
     }
 
+    @ModelAttribute("menu")
+    public String selectMenu() {
+        return "estudante";
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView listEstudantes(ModelAndView model) {

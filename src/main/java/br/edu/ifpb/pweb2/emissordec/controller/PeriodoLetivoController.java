@@ -34,6 +34,11 @@ public class PeriodoLetivoController {
         return mav;
     }
 
+    @ModelAttribute("menu")
+    public String selectMenu() {
+        return "periodoLetivo";
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView save(@Valid PeriodoLetivo periodoLetivo, ModelAndView mav, BindingResult validation, RedirectAttributes attrs) {
         if (validation.hasErrors()) {

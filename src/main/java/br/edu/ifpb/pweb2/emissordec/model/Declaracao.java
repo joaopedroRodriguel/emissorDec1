@@ -23,7 +23,6 @@ public class Declaracao {
     private Long id;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotBlank(message = "Campo Obrigatório!")
     private Date dataRecebimento;
 
     private String observacao;

@@ -13,6 +13,17 @@
     <title th:text="'EmissorDec - ' + ${titulo}"></title>
 </head>
 
+<div th:fragment="menuItem">
+    <nav class="navbar navbar-expand bg-dark d-flex justify-content-between mb-3 menu">
+        <div class="navbar-nav bg-blue">
+			<a th:classappend="${menu == 'home'} ? 'active'" class="nav-item nav-link menu-item" th:href="@{/}">Home</a>
+            <a th:classappend="${menu == 'estudante'} ? 'active'" class="nav-item nav-link menu-item" th:href="@{/estudantes}">Estudante</a>
+            <a th:classappend="${menu == 'instituicao'} ? 'active'" class="nav-item nav-link menu-item" th:href="@{/instituicoes}">Instituição</a>
+            <a th:classappend="${menu == 'declaracao'} ? 'active'" class="nav-item nav-link menu-item" th:href="@{/declaracoes}">Declaração</a>
+            <a th:classappend="${menu == 'periodoLetivo'} ? 'active'" class="nav-item nav-link menu-item" th:href="@{/periodos}">Periodo</a>
+        </div>
+</div>
+
 <div th:fragment="logo">
     <div class="logo-bar mb-3 p-3">
         <img th:src="@{/imagens/logo3.png}" />
