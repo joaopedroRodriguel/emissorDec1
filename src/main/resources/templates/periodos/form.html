@@ -1,12 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:insert="~{layout/layout}"
+    th:with="titulo='Cadastro de Declaração'">
+
 <body>
-    
+    <div layout:fragment="content">
+        <div class="card-header">
+            <h1 th:text="${titulo}"></h1>
+        </div>
+        <div class="card-body">
+                <form th:action="@{/save}" method="POST" th:object="${periodos}">
+                    <input type="hidden" th:field="*{id}" name="id" class="form-control"/>                    
+
+                    <label for="periodo">Ano</label>
+                    <input type="number" th:field="*{Ano}" name="Ano" class="form-control" /> <br /><br />
+
+                    <label for="periodo">Período</label>
+                    <input type="number" th:field="*{periodo}" name="periodo" class="form-control" /> <br /><br />
+
+                    <label for="periodo">Início do Período</label>
+                    <input type="datetime-local" th:field="*{inicio}" class="form-control"/> <br /><br />
+                    <p th:if="${#fields.hasErrors('inicio')}" th:errorclass="error" th:errors="*{inicio}"></p>
+
+                    <label for="periodo">Fim do Período</label>
+                    <input type="datetime-local" th:field="*{fim}" class="form-control"/> <br /><br />
+                    <p th:if="${#fields.hasErrors('fim')}" th:errorclass="error" th:errors="*{fim}"></p>
+
+                    <button type="submit" class="btn btn-purple">Salvar</button>
+                    <button class="btn btn-secundary"><a th:href="@{/}">Cancelar</a></button>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
