@@ -4,8 +4,8 @@
 <head th:replace="~{/fragments/base :: headfiles(${titulo})}"></head>
 
 <body class="bg-dark">
-    <div th:replace="~{/fragments/base :: logo}"></div>
     <div th:insert="~{/fragments/base :: menuItem}"></div>
+    <div th:replace="~{/fragments/base :: logo}"></div>
     <div class="container">
 
         <div th:text="${mensagem}" th:if="${mensagem ne null}" class="alert alert-success"></div>
