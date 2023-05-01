@@ -9,6 +9,7 @@ import lombok.ToString;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -29,17 +30,10 @@ public class Estudante {
     @NotBlank(message = "Campo Obrigatório!")
     private String matricula;
 
-    @ManyToOne
-    @JoinColumn(name = "instituicao_id")
-    @ToString.Exclude
-    private Instituicao instituicao;
+    @OneToOne
+    @JoinColumn(name = "instituicao_atual_id")
+    private Instituicao instituicaoAtual;
 
-    @OneToMany(mappedBy = "estudante" ,
-            targetEntity=Declaracao.class,
-            cascade=CascadeType.ALL)
-    private List<Declaracao> declaracoes;
-
-    public Estudante(Instituicao instituicao) {
-        this.instituicao = instituicao;
-    }
+    @OneToMany(mappedBy = "estudante", cascade = CascadeType.ALL)
+    private List<Declaracao> declaracoes = new ArrayList<>();
 }
