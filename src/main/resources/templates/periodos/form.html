@@ -7,7 +7,7 @@
             <h1 th:text="${titulo}"></h1>
         </div>
         <div class="card-body">
-                <form th:action="@{/save}" method="POST" th:object="${periodos}">
+                <form th:action="@{/save}" method="POST" th:object="${periodoLetivo}">
                     <input type="hidden" th:field="*{id}" name="id" class="form-control"/>                    
 
                     <label for="periodo">Ano</label>
