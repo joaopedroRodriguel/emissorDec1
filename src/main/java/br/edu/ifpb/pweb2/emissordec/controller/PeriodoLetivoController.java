@@ -65,6 +65,11 @@ public class PeriodoLetivoController {
         return mav;
     }
 
+    @ModelAttribute("periodos")
+    public List<PeriodoLetivo> periodoLetivos(){
+        return  periodoLetivoService.list();
+    }
+
     @RequestMapping("/{id}")
     public ModelAndView getPeriodoById(@PathVariable(value = "id") Long id, ModelAndView mav) {
         mav.addObject("periodoLetivo", "periodoLetivo");
