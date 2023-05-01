@@ -30,10 +30,14 @@ public class Estudante {
     @NotBlank(message = "Campo Obrigatório!")
     private String matricula;
 
-    @OneToOne
-    @JoinColumn(name = "instituicao_atual_id")
+    @ManyToOne
+    @JoinColumn(name = "instituicao_id")
+    @ToString.Exclude
     private Instituicao instituicaoAtual;
 
-    @OneToMany(mappedBy = "estudante", cascade = CascadeType.ALL)
-    private List<Declaracao> declaracoes = new ArrayList<>();
+    @OneToMany(mappedBy = "estudante" ,
+            targetEntity=Declaracao.class,
+            cascade=CascadeType.ALL)
+    private List<Declaracao> declaracoes;
+
 }
