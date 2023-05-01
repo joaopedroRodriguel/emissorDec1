@@ -29,7 +29,7 @@
                                 <a th:href="@{/declaracoes/edite/{id}(id=${declaracao.id})}"
                                     th:text="${declaracao.dataRecebimento}"></a>
                             </td>
-                            <td th:text="${#strings.substring(declaracao.observacao, 0, 5) + '...'}" th:if="${declaracao.observacao != null}"></td>
+                            <td th:text="${declaracao.observacao}" th:if="${declaracao.observacao != null}"></td>
                             <td th:if="${declaracao.observacao == null}">Não possui obsv.</td>
                             <td th:text="${declaracao.estudante.nome}" th:if="${declaracao.estudante != null}">
                             </td>

@@ -110,8 +110,8 @@ public class DeclaracaoController {
     @RequestMapping(value = "/edite/{id}")
     public ModelAndView editeDeclaracao(@PathVariable("id") Long id, Declaracao newDeclaracao, ModelAndView model) {
         model.setViewName("declaracoes/form");
-        Declaracao declaracao = declaracaoService.update(id, newDeclaracao);
-        model.addObject("declaracao", declaracao);
+        Optional<Declaracao> declaracao = declaracaoService.search(id);
+        model.addObject("declaracao", declaracao.get());
         return model;
 
     }
