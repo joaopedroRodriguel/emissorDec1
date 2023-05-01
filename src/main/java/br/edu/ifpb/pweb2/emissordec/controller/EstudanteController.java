@@ -37,6 +37,13 @@ public class EstudanteController {
         mav.addObject("estudante", estudante);
         return mav;
     }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ModelAndView declaracoes(ModelAndView mav,@PathVariable("id") Long id) {
+        mav.setViewName("estudantes/list");
+        mav.addObject("declaracoes", this.declaracoes(id));
+        return mav;
+    }
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView save(@Valid Estudante estudante, ModelAndView mav, BindingResult validation, RedirectAttributes attrs) {
         if (validation.hasErrors()) {
@@ -64,6 +71,11 @@ public class EstudanteController {
         model.addObject("estudantes", estudanteService.list());
         model.setViewName("estudantes/list");
         return model;
+    }
+
+    public List<Declaracao> declaracoes(Long idEstudante) {
+        Estudante estudante = this.estudanteService.search(idEstudante);
+        return  estudante.getDeclaracoes();
     }
 
     @RequestMapping("/excluir/{id}")
@@ -96,8 +108,5 @@ public class EstudanteController {
         return this.estudanteService.list();
     }
 
-    public List<Declaracao> declaracoes(Long idEstudante) {
-        Estudante estudante = this.estudanteService.search(idEstudante);
-        return  estudante.getDeclaracoes();
-    }
+
 }

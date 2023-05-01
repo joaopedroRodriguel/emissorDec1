@@ -3,7 +3,7 @@ package br.edu.ifpb.pweb2.emissordec.service;
 import br.edu.ifpb.pweb2.emissordec.model.Instituicao;
 import br.edu.ifpb.pweb2.emissordec.model.PeriodoLetivo;
 import br.edu.ifpb.pweb2.emissordec.repository.InstituicaoRepository;
-import org.springframework.beans.BeanUtils;
+import br.edu.ifpb.pweb2.emissordec.repository.PeriodoLetivoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,13 +18,19 @@ public class InstituicaoService {
     InstituicaoRepository instituicaoRepository;
 
     @Autowired
-    PeriodoLetivoService periodoLetivoService;
-
+    PeriodoLetivoRepository periodoLetivoRepository;
 
 
     public List<Instituicao> list() {
         return instituicaoRepository.findAll();
     }
+
+    public List<PeriodoLetivo> listarPeriodosLetivos() {
+        return this.periodoLetivoRepository.listarPeriodosSemInstituicoes();
+    }
+    public List<PeriodoLetivo>listarPeriodosDaInstituicao(Long idInstituicao){
+        return this.periodoLetivoRepository.listarPeriodosIntituicao(idInstituicao);
+    };
 
     public Optional<Instituicao> search(Long id) {
         return instituicaoRepository.findById(id);
@@ -40,24 +46,24 @@ public class InstituicaoService {
             instituicao.setSigla(newInstituicao.getSigla());
             instituicao.setPeriodos(newInstituicao.getPeriodos());
             if(!instituicao.getPeriodos().contains(newInstituicao.getPeriodos())){
-                instituicao.addPeriodo((PeriodoLetivo) newInstituicao.getPeriodos());
+                instituicao.adicionarPeriodo((PeriodoLetivo) newInstituicao.getPeriodos());
             }
 
             this.instituicaoRepository.save(instituicao);
             return "Instituição editada com sucesso";
         }
-        newInstituicao.addPeriodo((PeriodoLetivo) newInstituicao.getPeriodos());
+        newInstituicao.adicionarPeriodo((PeriodoLetivo) newInstituicao.getPeriodos());
         this.instituicaoRepository.save(newInstituicao);
         return "Instituição cadastrada com sucesso";
     }
 
     //falta acabar
-    public void delete(Long id) {
-        Optional<Instituicao> opInstituicao = this.instituicaoRepository.findById(id);
+    public String delete(Long idInstituicao) {
+        Optional<Instituicao> opInstituicao = this.instituicaoRepository.findById(idInstituicao);
         if (opInstituicao.isPresent()) {
-            this.instituicaoRepository.deleteById(id);
+            this.instituicaoRepository.deleteById(idInstituicao);
             return "Instituição deletada com sucesso";
         }
-        return "Instituição não encontrada, impossível deletar";
+        return "Instituição não encontrada";
     }
 }

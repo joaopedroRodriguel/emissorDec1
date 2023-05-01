@@ -1,5 +1,6 @@
 package br.edu.ifpb.pweb2.emissordec.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,10 +27,6 @@ public class InstituicaoController {
 
     @Autowired
     InstituicaoService instituicaoService;
-
-    @Autowired
-    PeriodoLetivoService periodoLetivoService;
-
     String mensagem;
 
     @RequestMapping("/form")
@@ -63,7 +60,6 @@ public class InstituicaoController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView listInstituicoes(ModelAndView mav) {
-        //model.addObject("instituicao", "listar");
         mav.addObject("instituicoes", instituicaoService.list());
         mav.setViewName("instituicoes/list");
         return mav;
@@ -91,10 +87,20 @@ public class InstituicaoController {
         return mav;
     }
 
-    @ModelAttribute("periodosItens")
-    public List<PeriodoLetivo> getPeriodos() {
-        return periodoLetivoService.list();
+    @RequestMapping(value = "/edite/{id}")
+    public ModelAndView editeInstituicao(ModelAndView mav, @PathVariable("idInstituicao") Long idInstituicao
+    ) {
+        List<PeriodoLetivo>  periodos = new ArrayList<>();
+        periodos.addAll(this.instituicaoService.listarPeriodosLetivos());
+        periodos.addAll(this.instituicaoService.listarPeriodosDaInstituicao(idInstituicao));
+        mav.setViewName("instituicoes/form");
+        mav.addObject("instituicao", instituicaoService.search(idInstituicao));
+        mav.addObject("periodosLetivos", periodos);
+        return mav;
     }
 
-
+    @ModelAttribute("periodosItens")
+    public List<PeriodoLetivo> getPeriodos() {
+        return instituicaoService.listarPeriodosLetivos();
+    }
 }
