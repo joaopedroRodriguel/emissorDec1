@@ -78,25 +78,24 @@ public class DeclaracaoController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView listeDeclaracoes(ModelAndView model) {       
-//        model.addObject("declaracao", "listar");
-        model.addObject("declaracoes", declaracaoService.list());
-        model.setViewName("declaracoes/list");
-        return model;
+    public ModelAndView listeDeclaracoes(ModelAndView mav) {
+        mav.addObject("declaracoes", declaracaoService.list());
+        mav.setViewName("declaracoes/list");
+        return mav;
     }
 
     @RequestMapping("/{id}")
-    public ModelAndView getDeclaracaoById(@PathVariable(value = "id") Long id, ModelAndView model) {
-        model.addObject("declaracao", "declaracao");
+    public ModelAndView getDeclaracaoById(@PathVariable(value = "id") Long id, ModelAndView mav) {
+        mav.addObject("declaracao", "declaracao");
         Optional<Declaracao> opDeclaracao = declaracaoService.search((id));
         if (opDeclaracao.isPresent()) {
-            model.setViewName("declaracoes/form");
-            model.addObject("declaracao", opDeclaracao.get());
+            mav.setViewName("declaracoes/form");
+            mav.addObject("declaracao", opDeclaracao.get());
         } else {
-            model.setViewName("declaracoes/list");
-            model.addObject("mensagem", "declaracao com id " + id + " não encontrado.");
+            mav.setViewName("declaracoes/list");
+            mav.addObject("mensagem", "declaracao com id " + id + " não encontrado.");
         }
-        return model;
+        return mav;
     }
 
     @RequestMapping("/excluir/{id}")
@@ -108,11 +107,11 @@ public class DeclaracaoController {
     }
 
     @RequestMapping(value = "/edite/{id}")
-    public ModelAndView editeDeclaracao(@PathVariable("id") Long id, Declaracao newDeclaracao, ModelAndView model) {
-        model.setViewName("declaracoes/form");
+    public ModelAndView editeDeclaracao(@PathVariable("id") Long id, Declaracao newDeclaracao, ModelAndView mav) {
+        mav.setViewName("declaracoes/form");
         Optional<Declaracao> declaracao = declaracaoService.search(id);
-        model.addObject("declaracao", declaracao.get());
-        return model;
+        mav.addObject("declaracao", declaracao.get());
+        return mav;
 
     }
 

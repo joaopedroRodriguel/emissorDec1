@@ -75,7 +75,7 @@ public class EstudanteController {
     }
 
     @RequestMapping(value = "/edite/{id}")
-    public ModelAndView edit(ModelAndView modelAndView, @PathVariable("idEstudante") Long idEstudante
+    public ModelAndView editEstudante(ModelAndView modelAndView, @PathVariable("idEstudante") Long idEstudante
     ) {
         List<Instituicao> instituicoes = new ArrayList<>();
         instituicoes.addAll(this.estudanteService.listarInstituicoes());
