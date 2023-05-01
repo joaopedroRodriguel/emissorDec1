@@ -1,5 +1,6 @@
 package br.edu.ifpb.pweb2.emissordec.controller;
 
+import br.edu.ifpb.pweb2.emissordec.model.Declaracao;
 import br.edu.ifpb.pweb2.emissordec.model.Estudante;
 import br.edu.ifpb.pweb2.emissordec.model.Instituicao;
 import br.edu.ifpb.pweb2.emissordec.service.EstudanteService;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,23 +57,8 @@ public class EstudanteController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView listEstudantes(ModelAndView model) {
-        //model.addObject("estudante", "listar");
         model.addObject("estudantes", estudanteService.list());
         model.setViewName("estudantes/list");
-        return model;
-    }
-
-    @RequestMapping("/{id}")
-    public ModelAndView getEstudanteById(@PathVariable(value = "id") Long id, ModelAndView model) {
-        model.addObject("estudante", "estudante");
-        Optional<Estudante> opEstudante = estudanteService.search((id));
-        if (opEstudante.isPresent()) {
-            model.setViewName("estudantes/form");
-            model.addObject("estudante", opEstudante.get());
-        } else {
-            model.setViewName("estudantes/list");
-            model.addObject("mensagem", "estudante com id " + id + " não encontrado.");
-        }
         return model;
     }
 
@@ -84,16 +71,29 @@ public class EstudanteController {
     }
 
     @RequestMapping(value = "/edite/{id}")
-    public ModelAndView editeEstudante(@PathVariable("id") Long id, Estudante newEstudante, ModelAndView model) {
-        model.setViewName("estudantes/form");
-        Optional<Estudante> estudante = estudanteService.search(id);
-        model.addObject("estudante", estudante.get());
-        model.addObject("titulo", "editado");
-        return model;
+    public ModelAndView edit(ModelAndView modelAndView, @PathVariable("idEstudante") Long idEstudante
+    ) {
+        List<Instituicao> instituicoes = new ArrayList<>();
+        instituicoes.addAll(this.estudanteService.listarInstituicoes());
+        instituicoes.addAll(this.instituicaoService.list());
+        modelAndView.setViewName("estudantes/form");
+        modelAndView.addObject("estudante", estudanteService.search(idEstudante));
+        modelAndView.addObject("instituicoes", instituicoes);
+        return modelAndView;
     }
 
-    @ModelAttribute("instituicaoItens")
-    public List<Instituicao> getInstituicoes() {
-        return instituicaoService.list();
+    @ModelAttribute("instituicoes")
+    public List<Instituicao> instituicoes() {
+        return this.estudanteService.listarInstituicoes();
+    }
+
+    @ModelAttribute("estudantes")
+    public List<Estudante> estudantes() {
+        return this.estudanteService.list();
+    }
+
+    public List<Declaracao> declaracoes(Long idEstudante) {
+        Estudante estudante = this.estudanteService.search(idEstudante);
+        return  estudante.getDeclaracoes();
     }
 }
