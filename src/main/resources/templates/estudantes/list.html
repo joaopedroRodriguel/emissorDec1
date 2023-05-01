@@ -1,11 +1,8 @@
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:replace="~{layout/layout}"
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:insert="~{layout/layout}"
     th:with="titulo='Listagem de Estudantes'">
 
 <body>
     <div layout:fragment="content">
-        <div class="card-header">
-            <h1 th:text="${titulo}"></h1>
-        </div>
         <div class="card-body">
             <form th:action="@{/estudantes/form}" method="GET">
                 <button class="btn btn-purple" type="submit">Novo</button>

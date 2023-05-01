@@ -62,3 +62,8 @@
 .menu-item:hover {
     color: black;
 }
+
+.logobar{
+    display: flex;
+    flex-direction: column;
+}

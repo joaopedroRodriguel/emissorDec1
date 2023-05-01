@@ -33,7 +33,7 @@ public class Estudante {
     @ManyToOne
     @JoinColumn(name = "instituicao_id")
     @ToString.Exclude
-    private Instituicao instituicaoAtual;
+    private Instituicao instituicao;
 
     @OneToMany(mappedBy = "estudante" ,
             targetEntity=Declaracao.class,

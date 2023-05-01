@@ -28,7 +28,7 @@ public class EstudanteService {
             Estudante estudante = opestudante.get();
             estudante.setNome(newEstudante.getNome());
             estudante.setMatricula(newEstudante.getMatricula());
-            estudante.setInstituicaoAtual(newEstudante.getInstituicaoAtual());
+            estudante.setInstituicao(newEstudante.getInstituicao());
 
             this.estudanteRepository.save(estudante);
             return "Estudante editado com sucesso";
