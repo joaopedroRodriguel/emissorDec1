@@ -16,21 +16,17 @@ import java.util.Date;
 @Entity
 @Table(name="tb_declaracao")
 public class Declaracao {
-
     @Id
     @Column(name="declaracao_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dataRecebimento;
-
     private String observacao;
 
     @ManyToOne
     @JoinColumn(name = "estudante_id")
     private Estudante estudante;
-
     @ManyToOne
     @JoinColumn(name = "periodo_id")
     private PeriodoLetivo periodoLetivo;

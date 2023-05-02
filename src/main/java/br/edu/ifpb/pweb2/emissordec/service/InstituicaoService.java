@@ -15,29 +15,24 @@ import java.util.Optional;
 
 @Service
 public class InstituicaoService {
-
     @Autowired
     InstituicaoRepository instituicaoRepository;
-
     public List<Instituicao> list() {
         return instituicaoRepository.findAll();
     }
-
     public Optional<Instituicao> search(Long id) {
         return instituicaoRepository.findById(id);
     }
-
+    @Transactional
     public Instituicao insert(Instituicao instituicao){
         return instituicaoRepository.save(instituicao);
     }
-
     public Instituicao update(Long id, Instituicao newInstituicao){
         Optional<Instituicao> oldInstituicao = instituicaoRepository.findById(id);
         Instituicao instituicao = oldInstituicao.get();
         BeanUtils.copyProperties(newInstituicao, instituicao, "id");
         return instituicaoRepository.save(instituicao);
     }
-
     public void delete(Long id) {
         instituicaoRepository.deleteById(id);
     }

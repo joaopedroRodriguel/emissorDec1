@@ -9,7 +9,6 @@ import lombok.ToString;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -18,23 +17,18 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name="tb_estudante")
 public class Estudante {
-
     @Id
     @Column(name="estudante_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @NotBlank(message = "Campo Obrigatório!")
     private String nome;
-    
     @NotBlank(message = "Campo Obrigatório!")
     private String matricula;
-
     @ManyToOne
     @JoinColumn(name = "instituicao_id")
     @ToString.Exclude
     private Instituicao instituicao;
-
     @OneToMany(mappedBy = "estudante" ,
             targetEntity=Declaracao.class,
             cascade=CascadeType.ALL)

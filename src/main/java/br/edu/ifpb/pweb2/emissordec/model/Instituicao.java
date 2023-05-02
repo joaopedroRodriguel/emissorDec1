@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
@@ -18,7 +17,6 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name="tb_instituicao")
 public class Instituicao {
-
     @Id
     @Column(name="instituicao_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,23 +25,16 @@ public class Instituicao {
     private String nome;
     @NotBlank(message="Campo obrigatório!")
     private String sigla;
-
     @Pattern(regexp = "[0-9]{11}", message = "Exatamente 11 números")
     private String fone;
-
     @OneToMany(mappedBy = "instituicao",
             targetEntity=Estudante.class,
             cascade=CascadeType.ALL)
     private List<Estudante> estudantes;
-
     @OneToMany (mappedBy = "instituicao" ,
             targetEntity=PeriodoLetivo.class,
             cascade=CascadeType.ALL)
     private List<PeriodoLetivo> periodos;
-
-    public void adicionarPeriodo(PeriodoLetivo newPeriodo) {
-        this.periodos.add(newPeriodo);
-    }
 
     public Instituicao(PeriodoLetivo periodoLetivo) {
         this.periodos = (List<PeriodoLetivo>) periodoLetivo;
