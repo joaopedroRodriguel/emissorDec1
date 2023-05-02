@@ -24,13 +24,10 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/estudantes")
 public class EstudanteController {
-
     @Autowired
     EstudanteService estudanteService;
-
     @Autowired
     InstituicaoService instituicaoService;
-
     @RequestMapping("/form")
     public ModelAndView getForm(Estudante estudante, ModelAndView mav) {
         mav.setViewName("estudantes/form");
@@ -53,47 +50,40 @@ public class EstudanteController {
         mav.setViewName("redirect:estudantes");
         return mav;
     }
-
-
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView listEstudantes(ModelAndView model) {
-        //model.addObject("estudante", "listar");
-        model.addObject("estudantes", estudanteService.list());
-        model.setViewName("estudantes/list");
-        return model;
+    public ModelAndView listEstudantes(ModelAndView mav) {
+        mav.addObject("estudantes", estudanteService.list());
+        mav.setViewName("estudantes/list");
+        return mav;
     }
-
     @RequestMapping("/{id}")
-    public ModelAndView getEstudanteById(@PathVariable(value = "id") Long id, ModelAndView model) {
-        model.addObject("estudante", "estudante");
+    public ModelAndView getEstudanteById(@PathVariable(value = "id") Long id, ModelAndView mav) {
+        mav.addObject("estudante", "estudante");
         Optional<Estudante> opEstudante = estudanteService.search((id));
         if (opEstudante.isPresent()) {
-            model.setViewName("estudantes/form");
-            model.addObject("estudante", opEstudante.get());
+            mav.setViewName("estudantes/form");
+            mav.addObject("estudante", opEstudante.get());
         } else {
-            model.setViewName("estudantes/list");
-            model.addObject("mensagem", "estudante com id " + id + " não encontrado.");
+            mav.setViewName("estudantes/list");
+            mav.addObject("mensagem", "estudante com id " + id + " não encontrado.");
         }
-        return model;
+        return mav;
     }
-
     @RequestMapping("/excluir/{id}")
-    public ModelAndView deleteEstudanteById(@PathVariable("id") Long id, ModelAndView model, RedirectAttributes attr) {
+    public ModelAndView deleteEstudanteById(@PathVariable("id") Long id, ModelAndView mav, RedirectAttributes attr) {
         estudanteService.delete((id));
         attr.addFlashAttribute("mensagem", "Estudante removido com sucesso!");
-        model.setViewName("redirect:/estudantes");
-        return model;
+        mav.setViewName("redirect:/estudantes");
+        return mav;
     }
-
     @RequestMapping(value = "/edite/{id}")
-    public ModelAndView editeEstudante(@PathVariable("id") Long id, Estudante newEstudante, ModelAndView model) {
-        model.setViewName("estudantes/form");
+    public ModelAndView editeEstudante(@PathVariable("id") Long id, Estudante newEstudante, ModelAndView mav) {
+        mav.setViewName("estudantes/form");
         Optional<Estudante> estudante = estudanteService.search(id);
-        model.addObject("estudante", estudante.get());
-        model.addObject("titulo", "editado");
-        return model;
+        mav.addObject("estudante", estudante.get());
+        mav.addObject("titulo", "editado");
+        return mav;
     }
-
     @ModelAttribute("instituicaoItens")
     public List<Instituicao> getInstituicoes() {
         return instituicaoService.list();

@@ -13,14 +13,11 @@ import java.util.Optional;
 
 @Service
 public class PeriodoLetivoService {
-
     @Autowired
     PeriodoLetivoRepository periodoLetivoRepository;
-
     public List<PeriodoLetivo> list() {
         return periodoLetivoRepository.findAll();
     }
-
     public Optional<PeriodoLetivo> search(Long id) {
         return periodoLetivoRepository.findById(id);
     }
@@ -28,14 +25,12 @@ public class PeriodoLetivoService {
     public PeriodoLetivo insert(PeriodoLetivo periodoLetivo){
         return periodoLetivoRepository.save(periodoLetivo);
     }
-
     public PeriodoLetivo update(Long id, PeriodoLetivo newPeriodoLetivo){
         Optional<PeriodoLetivo> oldPeriodoLetivo = periodoLetivoRepository.findById(id);
         PeriodoLetivo periodoLetivo = oldPeriodoLetivo.get();
         BeanUtils.copyProperties(newPeriodoLetivo, periodoLetivo, "id");
         return periodoLetivoRepository.save(periodoLetivo);
     }
-
     public void delete(Long id) {
         periodoLetivoRepository.deleteById(id);
     }

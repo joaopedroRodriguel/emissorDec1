@@ -14,29 +14,24 @@ import java.util.Optional;
 
 @Service
 public class EstudanteService {
-
     @Autowired
     EstudanteRepository estudanteRepository;
-
     public List<Estudante> list() {
         return estudanteRepository.findAll();
     }
-
     public Optional<Estudante> search(Long id) {
         return estudanteRepository.findById(id);
     }
-
+    @Transactional
     public Estudante insert(Estudante estudante){
         return estudanteRepository.save(estudante);
     }
-
     public Estudante update(Long id, Estudante newEstudante){
         Optional<Estudante> oldEstudante = estudanteRepository.findById(id);
         Estudante estudante = oldEstudante.get();
         BeanUtils.copyProperties(newEstudante, estudante, "id");
         return estudanteRepository.save(estudante);
     }
-
     public void delete(Long id) {
         estudanteRepository.deleteById(id);
     }
