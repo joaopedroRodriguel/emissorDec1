@@ -1,9 +1,6 @@
 package br.edu.ifpb.pweb2.emissordec.controller;
 
-import br.edu.ifpb.pweb2.emissordec.model.Estudante;
-import br.edu.ifpb.pweb2.emissordec.model.Instituicao;
 import br.edu.ifpb.pweb2.emissordec.model.PeriodoLetivo;
-import br.edu.ifpb.pweb2.emissordec.service.InstituicaoService;
 import br.edu.ifpb.pweb2.emissordec.service.PeriodoLetivoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -95,8 +92,9 @@ public class PeriodoLetivoController {
     @RequestMapping(value = "/edite/{id}")
     public ModelAndView editePeriodo(@PathVariable("id") Long id, PeriodoLetivo periodoLetivo, ModelAndView mav) {
         mav.setViewName("periodos/form");
-        PeriodoLetivo periodo = periodoLetivoService.update(id, periodoLetivo);
-        mav.addObject("periodoLetivo", periodo);
+        Optional<PeriodoLetivo> periodo = periodoLetivoService.search(id);
+        mav.addObject("periodo", periodo.get());
+        mav.addObject("titulo", "editado");
         return mav;
 
     }

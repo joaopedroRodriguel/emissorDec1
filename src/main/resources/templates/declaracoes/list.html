@@ -32,7 +32,7 @@
                             </td>
                             <td th:if="${declaracao.estudante == null}">Sem Estudante cadastrado</td>
                             <td>
-                            <td th:text="${declaracao.periodoLetivo.ano}" th:if="${declaracao.periodoLetivo != null}">
+                            <td th:text="${declaracao.periodoLetivo.ano} + '.' + ${declaracao.periodoLetivo.periodo}" th:if="${declaracao.periodoLetivo != null}">
                             </td>
                             <td th:if="${declaracao.periodoLetivo == null}">Sem Periodo Letivo cadastrado</td>
                             <td>

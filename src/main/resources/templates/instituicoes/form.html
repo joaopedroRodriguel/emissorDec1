@@ -18,7 +18,13 @@
 
                 <label for="instituicao">Telefone</label>
                 <input type="text" th:field="*{fone}" name="telefone" class="form-control" /> <br /><br />
+                <p th:if="${#fields.hasErrors('fone')}" th:errorclass="error" th:errors="*{fone}"></p>
                
+                <!-- <label for="periodoLetivo">Período Letivo</label>
+                <select th:field="*{periodoLetivo.id}" class="form-control" id="option-card">
+                    <option th:each="pl : ${periodoItens}" th:value="${pl.id}" th:text="${pl.ano} + '.' + ${pl.periodo}" />
+                </select>
+                <br /><br /> -->
                 <br /><br />
 
 

@@ -10,6 +10,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -24,19 +25,17 @@ public class PeriodoLetivo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Campo Obrigatório!")
+    @NotNull
     private int ano;
 
-    @NotBlank(message = "Campo Obrigatório!")
+    @NotNull
     private int periodo;
     
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotBlank(message = "Campo Obrigatório!")
-    private LocalDate inicio;
+    private Date inicio;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotBlank(message = "Campo Obrigatório!")
-    private LocalDate fim;
+    private Date fim;
 
     @OneToMany(mappedBy = "periodoLetivo",
             targetEntity=Declaracao.class,

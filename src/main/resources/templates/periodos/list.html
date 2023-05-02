@@ -17,7 +17,9 @@
                     <thead>
                         <tr>
                             <th>Ano</th>
-                            <th>Período</th>                            
+                            <th>Período</th>
+                            <th>Inicio</th> 
+                            <th>Fim</th>                           
                             <th></th>
                         </tr>
                     </thead>
@@ -28,6 +30,8 @@
                                     th:text="${periodo.ano}"></a>
                             </td>
                             <td th:text="${periodo.periodo}"></td>
+                            <td th:text="${periodo.inicio}"></td>
+                            <td th:text="${periodo.fim}"></td>
                             <td>
                                 <form th:action="@{/periodos/excluir/{id}(id=${periodo.id})}">
                                     <button type="submit" class="btn btn-purple btn-sm">Excluir</button>

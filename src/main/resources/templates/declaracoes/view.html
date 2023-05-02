@@ -1,0 +1,16 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:insert="~{layout/layout}"
+    th:with="titulo='Listagem de Declarações'">
+
+<body>
+    <div layout:fragment="content">
+        <div class="card-body">
+            <div th:action="@{/declaracoes/view}" method="GET">
+                <p class="home"
+                    th:text="'Declaro que o aluno ' + ${declaracao.estudante} + ' pertence à Instituição ' + ${declaracao.estudante} + ' no período ' + ${declaracao.periodoLetivo} + '.'">
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
