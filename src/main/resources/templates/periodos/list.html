@@ -22,13 +22,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="instituicao : ${instituicoes}">
+                        <tr th:each="periodo : ${periodos}">
                             <td>
                                 <a th:href="@{/periodos/edite/{id}(id=${periodo.id})}"
-                                    th:text="${periodo.nome}"></a>
+                                    th:text="${periodo.ano}"></a>
                             </td>
-                            <td th:text="${periodo.sigla}"></td>
-                            <td th:text="${periodo.fone}"></td>
+                            <td th:text="${periodo.periodo}"></td>
                             <td>
                                 <form th:action="@{/periodos/excluir/{id}(id=${periodo.id})}">
                                     <button type="submit" class="btn btn-purple btn-sm">Excluir</button>

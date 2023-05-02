@@ -4,6 +4,8 @@ import br.edu.ifpb.pweb2.emissordec.model.Instituicao;
 import br.edu.ifpb.pweb2.emissordec.model.PeriodoLetivo;
 import br.edu.ifpb.pweb2.emissordec.repository.InstituicaoRepository;
 import br.edu.ifpb.pweb2.emissordec.repository.PeriodoLetivoRepository;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,53 +19,26 @@ public class InstituicaoService {
     @Autowired
     InstituicaoRepository instituicaoRepository;
 
-    @Autowired
-    PeriodoLetivoRepository periodoLetivoRepository;
-
-
     public List<Instituicao> list() {
         return instituicaoRepository.findAll();
     }
-
-    public List<PeriodoLetivo> listarPeriodosLetivos() {
-        return this.periodoLetivoRepository.listarPeriodosSemInstituicoes();
-    }
-    public List<PeriodoLetivo>listarPeriodosDaInstituicao(Long idInstituicao){
-        return this.periodoLetivoRepository.listarPeriodosIntituicao(idInstituicao);
-    };
 
     public Optional<Instituicao> search(Long id) {
         return instituicaoRepository.findById(id);
     }
 
-    @Transactional
-    public String insert(Instituicao newInstituicao) {
-        Optional<Instituicao> opInstituicao = this.instituicaoRepository.getInstituicaoBySiglaEquals(newInstituicao.getSigla().toUpperCase());
-        if (opInstituicao.isPresent()) {
-            Instituicao instituicao = opInstituicao.get();
-            instituicao.setNome(newInstituicao.getNome());
-            instituicao.setFone(newInstituicao.getFone());
-            instituicao.setSigla(newInstituicao.getSigla());
-            instituicao.setPeriodos(newInstituicao.getPeriodos());
-            if(!instituicao.getPeriodos().contains(newInstituicao.getPeriodos())){
-                instituicao.adicionarPeriodo((PeriodoLetivo) newInstituicao.getPeriodos());
-            }
-
-            this.instituicaoRepository.save(instituicao);
-            return "Instituição editada com sucesso";
-        }
-        newInstituicao.adicionarPeriodo((PeriodoLetivo) newInstituicao.getPeriodos());
-        this.instituicaoRepository.save(newInstituicao);
-        return "Instituição cadastrada com sucesso";
+    public Instituicao insert(Instituicao instituicao){
+        return instituicaoRepository.save(instituicao);
     }
 
-    //falta acabar
-    public String delete(Long idInstituicao) {
-        Optional<Instituicao> opInstituicao = this.instituicaoRepository.findById(idInstituicao);
-        if (opInstituicao.isPresent()) {
-            this.instituicaoRepository.deleteById(idInstituicao);
-            return "Instituição deletada com sucesso";
-        }
-        return "Instituição não encontrada";
+    public Instituicao update(Long id, Instituicao newInstituicao){
+        Optional<Instituicao> oldInstituicao = instituicaoRepository.findById(id);
+        Instituicao instituicao = oldInstituicao.get();
+        BeanUtils.copyProperties(newInstituicao, instituicao, "id");
+        return instituicaoRepository.save(instituicao);
+    }
+
+    public void delete(Long id) {
+        instituicaoRepository.deleteById(id);
     }
 }

@@ -37,13 +37,6 @@ public class EstudanteController {
         mav.addObject("estudante", estudante);
         return mav;
     }
-
-    @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView declaracoes(ModelAndView mav,@PathVariable("id") Long id) {
-        mav.setViewName("estudantes/list");
-        mav.addObject("declaracoes", this.declaracoes(id));
-        return mav;
-    }
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView save(@Valid Estudante estudante, ModelAndView mav, BindingResult validation, RedirectAttributes attrs) {
         if (validation.hasErrors()) {
@@ -61,21 +54,27 @@ public class EstudanteController {
         return mav;
     }
 
-    @ModelAttribute("menu")
-    public String selectMenu() {
-        return "estudante";
-    }
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView listEstudantes(ModelAndView model) {
+        //model.addObject("estudante", "listar");
         model.addObject("estudantes", estudanteService.list());
         model.setViewName("estudantes/list");
         return model;
     }
 
-    public List<Declaracao> declaracoes(Long idEstudante) {
-        Estudante estudante = this.estudanteService.search(idEstudante);
-        return  estudante.getDeclaracoes();
+    @RequestMapping("/{id}")
+    public ModelAndView getEstudanteById(@PathVariable(value = "id") Long id, ModelAndView model) {
+        model.addObject("estudante", "estudante");
+        Optional<Estudante> opEstudante = estudanteService.search((id));
+        if (opEstudante.isPresent()) {
+            model.setViewName("estudantes/form");
+            model.addObject("estudante", opEstudante.get());
+        } else {
+            model.setViewName("estudantes/list");
+            model.addObject("mensagem", "estudante com id " + id + " não encontrado.");
+        }
+        return model;
     }
 
     @RequestMapping("/excluir/{id}")
@@ -87,26 +86,16 @@ public class EstudanteController {
     }
 
     @RequestMapping(value = "/edite/{id}")
-    public ModelAndView editEstudante(ModelAndView modelAndView, @PathVariable("idEstudante") Long idEstudante
-    ) {
-        List<Instituicao> instituicoes = new ArrayList<>();
-        instituicoes.addAll(this.estudanteService.listarInstituicoes());
-        instituicoes.addAll(this.instituicaoService.list());
-        modelAndView.setViewName("estudantes/form");
-        modelAndView.addObject("estudante", estudanteService.search(idEstudante));
-        modelAndView.addObject("instituicoes", instituicoes);
-        return modelAndView;
+    public ModelAndView editeEstudante(@PathVariable("id") Long id, Estudante newEstudante, ModelAndView model) {
+        model.setViewName("estudantes/form");
+        Optional<Estudante> estudante = estudanteService.search(id);
+        model.addObject("estudante", estudante.get());
+        model.addObject("titulo", "editado");
+        return model;
     }
 
-    @ModelAttribute("instituicoes")
-    public List<Instituicao> instituicoes() {
-        return this.estudanteService.listarInstituicoes();
+    @ModelAttribute("instituicaoItens")
+    public List<Instituicao> getInstituicoes() {
+        return instituicaoService.list();
     }
-
-    @ModelAttribute("estudantes")
-    public List<Estudante> estudantes() {
-        return this.estudanteService.list();
-    }
-
-
 }

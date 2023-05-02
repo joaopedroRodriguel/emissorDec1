@@ -27,6 +27,10 @@ public class InstituicaoController {
 
     @Autowired
     InstituicaoService instituicaoService;
+
+    @Autowired
+    PeriodoLetivoService periodoLetivoService;
+
     String mensagem;
 
     @RequestMapping("/form")
@@ -34,11 +38,6 @@ public class InstituicaoController {
         mav.setViewName("instituicoes/form");
         mav.addObject("instituicao", instituicao);
         return mav;
-    }
-
-    @ModelAttribute("menu")
-    public String selectMenu() {
-        return "instituicao";
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -59,24 +58,25 @@ public class InstituicaoController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView listInstituicoes(ModelAndView mav) {
-        mav.addObject("instituicoes", instituicaoService.list());
-        mav.setViewName("instituicoes/list");
-        return mav;
+    public ModelAndView listInstituicoes(ModelAndView model) {
+        //model.addObject("instituicao", "listar");
+        model.addObject("instituicoes", instituicaoService.list());
+        model.setViewName("instituicoes/list");
+        return model;
     }
 
     @RequestMapping("/{id}")
-    public ModelAndView getInstituicaoById(@PathVariable(value = "id") Long id, ModelAndView mav) {
-        mav.addObject("instituicao", "encontrado");
+    public ModelAndView getInstituicaoById(@PathVariable(value = "id") Long id, ModelAndView model) {
+        model.addObject("instituicao", "encontrado");
         Optional<Instituicao> opInstituicao = instituicaoService.search((id));
         if (opInstituicao.isPresent()) {
-            mav.setViewName("instituicoes/form");
-            mav.addObject("instituicao", opInstituicao.get());
+            model.setViewName("instituicoes/form");
+            model.addObject("instituicao", opInstituicao.get());
         } else {
-            mav.setViewName("instituicoes/list");
-            mav.addObject("mensagem", "instituicao com id " + id + " não encontrado.");
+            model.setViewName("instituicoes/list");
+            model.addObject("mensagem", "instituicao com id " + id + " não encontrado.");
         }
-        return mav;
+        return model;
     }
 
     @RequestMapping("/excluir/{id}")
@@ -88,19 +88,17 @@ public class InstituicaoController {
     }
 
     @RequestMapping(value = "/edite/{id}")
-    public ModelAndView editeInstituicao(ModelAndView mav, @PathVariable("idInstituicao") Long idInstituicao
-    ) {
-        List<PeriodoLetivo>  periodos = new ArrayList<>();
-        periodos.addAll(this.instituicaoService.listarPeriodosLetivos());
-        periodos.addAll(this.instituicaoService.listarPeriodosDaInstituicao(idInstituicao));
-        mav.setViewName("instituicoes/form");
-        mav.addObject("instituicao", instituicaoService.search(idInstituicao));
-        mav.addObject("periodosLetivos", periodos);
-        return mav;
+    public ModelAndView editeInstituicao(@PathVariable("id") Long id, Instituicao newInstituicao, ModelAndView model) {
+        model.setViewName("instituicoes/form");
+        Optional<Instituicao> instituicao = instituicaoService.search(id);
+        model.addObject("instituicao", instituicao.get());
+        model.addObject("titulo", "editado");
+        return model;
     }
-
     @ModelAttribute("periodosItens")
     public List<PeriodoLetivo> getPeriodos() {
-        return instituicaoService.listarPeriodosLetivos();
+        return periodoLetivoService.list();
     }
+
+
 }

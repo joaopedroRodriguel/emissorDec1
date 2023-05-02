@@ -7,6 +7,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -21,13 +23,17 @@ public class PeriodoLetivo {
     @Column(name="periodo_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotBlank(message = "Campo Obrigatório!")
     private int ano;
+
     @NotBlank(message = "Campo Obrigatório!")
     private int periodo;
+    
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotBlank(message = "Campo Obrigatório!")
     private LocalDate inicio;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotBlank(message = "Campo Obrigatório!")
     private LocalDate fim;
