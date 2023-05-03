@@ -38,10 +38,10 @@ public class PeriodoLetivoController {
             return mav;
         }
         if (periodoLetivo.getId() == null) {
-            attrs.addFlashAttribute("mensagem", "periodoLetivo cadastrado com sucesso!");
+            attrs.addFlashAttribute("message", "periodoLetivo cadastrado com sucesso!");
 
         } else {
-            attrs.addFlashAttribute("mensagem", "periodoLetivo editado com sucesso!");
+            attrs.addFlashAttribute("message", "periodoLetivo editado com sucesso!");
         }
         periodoLetivoService.insert(periodoLetivo);
         mav.setViewName("redirect:periodos");
@@ -64,14 +64,14 @@ public class PeriodoLetivoController {
             mav.addObject("periodoLetivo", opPeriodoLetivo.get());
         } else {
             mav.setViewName("periodos/list");
-            mav.addObject("mensagem", "PeriodoLetivo com id " + id + " não encontrado.");
+            mav.addObject("message", "PeriodoLetivo com id " + id + " não encontrado.");
         }
         return mav;
     }
     @RequestMapping("/excluir/{id}")
     public ModelAndView deletePeriodoById(@PathVariable("id") Long id, ModelAndView mav, RedirectAttributes attr) {
         periodoLetivoService.delete((id));
-        attr.addFlashAttribute("mensagem", "PeriodoLetivo removido com sucesso!");
+        attr.addFlashAttribute("message", "PeriodoLetivo removido com sucesso!");
         mav.setViewName("redirect:/periodos");
         return mav;
     }

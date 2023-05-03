@@ -28,7 +28,6 @@ public class InstituicaoController {
     InstituicaoService instituicaoService;
     @Autowired
     PeriodoLetivoService periodoLetivoService;
-    String mensagem;
     @RequestMapping("/form")
     public ModelAndView getForm(Instituicao instituicao,ModelAndView mav) {
         mav.setViewName("instituicoes/form");
@@ -43,10 +42,10 @@ public class InstituicaoController {
             return mav;
         }
         if (instituicao.getId() == null) {
-            attrs.addFlashAttribute("mensagem", "Instituicao cadastrado com sucesso!");
+            attrs.addFlashAttribute("message", "Instituicao cadastrado com sucesso!");
 
         } else {
-            attrs.addFlashAttribute("mensagem", "Instituicao editada com sucesso!");
+            attrs.addFlashAttribute("message", "Instituicao editada com sucesso!");
         }
         instituicaoService.insert(instituicao);
         mav.setViewName("redirect:instituicoes");
@@ -69,14 +68,14 @@ public class InstituicaoController {
             mav.addObject("instituicao", opInstituicao.get());
         } else {
             mav.setViewName("instituicoes/list");
-            mav.addObject("mensagem", "instituicao com id " + id + " não encontrado.");
+            mav.addObject("message", "instituicao com id " + id + " não encontrado.");
         }
         return mav;
     }
     @RequestMapping("/excluir/{id}")
     public ModelAndView deleteInstituicaoById(@PathVariable("id") Long id, ModelAndView mav, RedirectAttributes attr) {
         instituicaoService.delete((id));
-        attr.addFlashAttribute("mensagem", "Instituicao removida com sucesso!");
+        attr.addFlashAttribute("message", "Instituicao removida com sucesso!");
         mav.setViewName("redirect:/instituicoes");
         return mav;
     }

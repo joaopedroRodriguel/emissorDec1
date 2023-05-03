@@ -53,10 +53,10 @@ public class DeclaracaoController {
             return mav;
         }
         if (declaracao.getId() == null) {
-            attrs.addFlashAttribute("mensagem", "Declaracao cadastrada com sucesso!");
+            attrs.addFlashAttribute("message", "Declaracao cadastrada com sucesso!");
 
         } else {
-            attrs.addFlashAttribute("mensagem", "Declaracao editada com sucesso!");
+            attrs.addFlashAttribute("message", "Declaracao editada com sucesso!");
         }
         declaracaoService.insert(declaracao);
         mav.setViewName("redirect:declaracoes");
@@ -77,14 +77,14 @@ public class DeclaracaoController {
             mav.addObject("declaracao", opDeclaracao.get());
         } else {
             mav.setViewName("declaracoes/list");
-            mav.addObject("mensagem", "declaracao com id " + id + " não encontrado.");
+            mav.addObject("message", "declaracao com id " + id + " não encontrado.");
         }
         return mav;
     }
     @RequestMapping("/excluir/{id}")
     public ModelAndView deleteDeclaracaoById(@PathVariable("id") Long id, ModelAndView mav, RedirectAttributes attr) {
         declaracaoService.delete((id));
-        attr.addFlashAttribute("mensagem", "Declaracao removida com sucesso!");
+        attr.addFlashAttribute("message", "Declaracao removida com sucesso!");
         mav.setViewName("redirect:/declaracoes");
         return mav;
     }

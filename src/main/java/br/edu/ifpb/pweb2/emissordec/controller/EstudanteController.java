@@ -41,10 +41,10 @@ public class EstudanteController {
             return mav;
         }
         if (estudante.getId() == null) {
-            attrs.addFlashAttribute("mensagem", "Estudante cadastrado com sucesso!");
+            attrs.addFlashAttribute("message", "Estudante cadastrado com sucesso!");
 
         } else {
-            attrs.addFlashAttribute("mensagem", "Estudante editado com sucesso!");
+            attrs.addFlashAttribute("message", "Estudante editado com sucesso!");
         }
         estudanteService.insert(estudante);
         mav.setViewName("redirect:estudantes");
@@ -65,14 +65,14 @@ public class EstudanteController {
             mav.addObject("estudante", opEstudante.get());
         } else {
             mav.setViewName("estudantes/list");
-            mav.addObject("mensagem", "estudante com id " + id + " não encontrado.");
+            mav.addObject("message", "estudante com id " + id + " não encontrado.");
         }
         return mav;
     }
     @RequestMapping("/excluir/{id}")
     public ModelAndView deleteEstudanteById(@PathVariable("id") Long id, ModelAndView mav, RedirectAttributes attr) {
         estudanteService.delete((id));
-        attr.addFlashAttribute("mensagem", "Estudante removido com sucesso!");
+        attr.addFlashAttribute("message", "Estudante removido com sucesso!");
         mav.setViewName("redirect:/estudantes");
         return mav;
     }
