@@ -33,9 +33,15 @@ public class PeriodoLetivo {
             targetEntity=Declaracao.class,
             cascade=CascadeType.ALL)
     private List<Declaracao> declaracoes;
+    
     @ManyToOne
     @JoinColumn(name = "instituicao_id")
     private Instituicao instituicao;
+
+    public Instituicao getInstituicao(){
+        return this.instituicao;
+    }
+
     public PeriodoLetivo(Instituicao instituicao) {
         this.instituicao = instituicao;
     }

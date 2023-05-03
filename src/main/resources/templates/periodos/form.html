@@ -1,5 +1,5 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:insert="~{layout/layout}"
-    th:with="titulo='Cadastro de Declaração'">
+    th:with="titulo='Cadastro de Periodos'">
 
 <body>
     <div layout:fragment="content">
@@ -23,6 +23,11 @@
                     <label for="periodo">Fim do Período</label>
                     <input type="datetime-local" th:field="*{fim}" class="form-control"/> <br /><br />
                     <p th:if="${#fields.hasErrors('fim')}" th:errorclass="error" th:errors="*{fim}"></p>
+
+                    <!-- <label for="instituicao">Instituição</label>
+                    <select th:field="*{instituicao}" class="form-control" id="option-card">
+                        <option th:each="inst : ${instituicaoItens}" th:value="${inst.id}" th:text="${inst.nome}" />
+                    </select><br><br> -->
 
                     <button type="submit" class="btn btn-purple">Salvar</button>
                     <button class="btn btn-secundary"><a th:href="@{/}">Cancelar</a></button>

@@ -1,6 +1,8 @@
 package br.edu.ifpb.pweb2.emissordec.controller;
 
+import br.edu.ifpb.pweb2.emissordec.model.Instituicao;
 import br.edu.ifpb.pweb2.emissordec.model.PeriodoLetivo;
+import br.edu.ifpb.pweb2.emissordec.service.InstituicaoService;
 import br.edu.ifpb.pweb2.emissordec.service.PeriodoLetivoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,9 @@ import java.util.Optional;
 public class PeriodoLetivoController {
     @Autowired
     PeriodoLetivoService periodoLetivoService;
+
+    InstituicaoService instituicaoService;
+
     @ModelAttribute("menu")
     public String selectMenu() {
         return "periodoLetivo";
@@ -43,6 +48,7 @@ public class PeriodoLetivoController {
         } else {
             attrs.addFlashAttribute("message", "periodoLetivo editado com sucesso!");
         }
+        periodoLetivo.getInstituicao().setPeriodoAtual(periodoLetivo);
         periodoLetivoService.insert(periodoLetivo);
         mav.setViewName("redirect:periodos");
         return mav;
@@ -88,4 +94,9 @@ public class PeriodoLetivoController {
     public List<PeriodoLetivo> periodoLetivos(){
         return  periodoLetivoService.list();
     }
+
+    // @ModelAttribute("instituicaoItens")
+    // public List<Instituicao> getInstituicoes() {
+    //     return instituicaoService.list();
+    // }
 }

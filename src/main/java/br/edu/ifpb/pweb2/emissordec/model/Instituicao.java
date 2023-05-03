@@ -36,7 +36,6 @@ public class Instituicao {
             cascade=CascadeType.ALL)
     private List<PeriodoLetivo> periodos;
 
-    public Instituicao(PeriodoLetivo periodoLetivo) {
-        this.periodos = (List<PeriodoLetivo>) periodoLetivo;
-    }
+    @OneToOne(orphanRemoval = true)
+    private PeriodoLetivo periodoAtual;
 }

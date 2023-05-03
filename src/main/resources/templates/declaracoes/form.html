@@ -26,7 +26,7 @@
                     <br /><br />
 
                     <label for="periodoLetivo">Período Letivo</label>
-                    <select th:field="*{periodoLetivo.id}">
+                    <select th:field="*{periodoLetivo.id}" class="form-control" id="option-card">
                         <option th:each="pl : ${periodoLetivoItens}" th:value="${pl.id}" th:text="${pl.ano + '.' + pl.periodo}" class="form-control"/>
                     </select>
                     <br /><br />
