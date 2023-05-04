@@ -73,6 +73,9 @@ public class PeriodoLetivoController {
     }
     @RequestMapping("/excluir/{id}")
     public ModelAndView deletePeriodoById(@PathVariable("id") Long id, ModelAndView mav, RedirectAttributes attr) {
+        Optional<PeriodoLetivo> pl = periodoLetivoService.search(id);
+        pl.get().setDeclaracoes(null);
+        pl.get().setInstituicao(null);
         periodoLetivoService.delete((id));
         attr.addFlashAttribute("message", "PeriodoLetivo removido com sucesso!");
         mav.setViewName("redirect:/periodos");

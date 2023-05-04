@@ -38,11 +38,8 @@ public class PeriodoLetivo {
     @JoinColumn(name = "instituicao_id")
     private Instituicao instituicao;
 
-    public Instituicao getInstituicao(){
-        return this.instituicao;
-    }
-
-    public PeriodoLetivo(Instituicao instituicao) {
-        this.instituicao = instituicao;
-    }
+    // public PeriodoLetivo(Instituicao instituicao) {
+    //     this.instituicao = instituicao;
+    // }
+    
 }

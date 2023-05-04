@@ -75,6 +75,8 @@ public class InstituicaoController {
     }
     @RequestMapping("/excluir/{id}")
     public ModelAndView deleteInstituicaoById(@PathVariable("id") Long id, ModelAndView mav, RedirectAttributes attr) {
+        Optional<Instituicao> instituicao = instituicaoService.search(id);
+        instituicao.get().setEstudantes(null);
         instituicaoService.delete((id));
         attr.addFlashAttribute("message", "Instituicao removida com sucesso!");
         mav.setViewName("redirect:/instituicoes");

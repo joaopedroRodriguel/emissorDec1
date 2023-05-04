@@ -83,6 +83,9 @@ public class DeclaracaoController {
     }
     @RequestMapping("/excluir/{id}")
     public ModelAndView deleteDeclaracaoById(@PathVariable("id") Long id, ModelAndView mav, RedirectAttributes attr) {
+        Optional<Declaracao> declaracao = declaracaoService.search(id);
+        declaracao.get().setEstudante(null);
+        declaracao.get().setPeriodoLetivo(null);
         declaracaoService.delete((id));
         attr.addFlashAttribute("message", "Declaracao removida com sucesso!");
         mav.setViewName("redirect:/declaracoes");
