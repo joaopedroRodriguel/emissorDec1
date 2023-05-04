@@ -35,7 +35,14 @@ public class Instituicao {
             targetEntity=PeriodoLetivo.class,
             cascade=CascadeType.ALL)
     private List<PeriodoLetivo> periodos;
-
-    @OneToOne(orphanRemoval = true)
+    @OneToOne
     private PeriodoLetivo periodoAtual;
+
+    // public void adicionarPeriodo(PeriodoLetivo newPeriodo) {
+    //     this.periodos.add(newPeriodo);
+    // }
+
+    // public Instituicao(PeriodoLetivo periodoLetivo) {
+    //     this.periodoAtual = periodoLetivo;
+    // }
 }
