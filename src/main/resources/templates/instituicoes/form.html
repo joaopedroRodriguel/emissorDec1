@@ -20,11 +20,11 @@
                 <input type="text" th:field="*{fone}" name="telefone" class="form-control" /> <br /><br />
                 <p th:if="${#fields.hasErrors('fone')}" th:errorclass="error" th:errors="*{fone}"></p>
                
-                <label for="periodoAtual">Período Letivo Atual</label>
+                <!-- <label for="periodoAtual">Período Letivo Atual</label>
                 <select th:field="*{periodoAtual.id}" class="form-control" id="option-card">
                     <option th:each="pl : ${periodosItens}" th:value="${pl.id}" th:text="${pl.ano} + '.' + ${pl.periodo}" />
                 </select>
-                <br /><br />
+                <br /><br /> -->
                 <br /><br />
 
 

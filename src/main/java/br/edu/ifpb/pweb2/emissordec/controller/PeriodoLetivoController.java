@@ -24,8 +24,6 @@ public class PeriodoLetivoController {
     @Autowired
     PeriodoLetivoService periodoLetivoService;
 
-    InstituicaoService instituicaoService;
-
     @ModelAttribute("menu")
     public String selectMenu() {
         return "periodoLetivo";
@@ -48,7 +46,6 @@ public class PeriodoLetivoController {
         } else {
             attrs.addFlashAttribute("message", "periodoLetivo editado com sucesso!");
         }
-        periodoLetivo.getInstituicao().setPeriodoAtual(periodoLetivo);
         periodoLetivoService.insert(periodoLetivo);
         mav.setViewName("redirect:periodos");
         return mav;

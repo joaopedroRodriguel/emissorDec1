@@ -16,7 +16,7 @@
                             <th>Nome</th>
                             <th>Sigla</th>
                             <th>Fone</th>
-                            <th>Período Atual</th>
+                            <!-- <th>Período Atual</th> -->
                             <th></th>
                         </tr>
                     </thead>
@@ -28,9 +28,9 @@
                             </td>
                             <td th:text="${instituicao.sigla}"></td>
                             <td th:text="${instituicao.fone}"></td>
-                            <td th:text="${instituicao.periodoAtual.ano} + '.' + ${instituicao.periodoAtual.periodo}" th:if="${instituicao.periodoAtual != null}">
+                            <!-- <td th:text="${instituicao.periodoAtual.ano} + '.' + ${instituicao.periodoAtual.periodo}" th:if="${instituicao.periodoAtual != null}">
                             </td>
-                            <td th:if="${instituicao.periodoAtual == null}">Sem Periodo Letivo cadastrado</td>
+                            <td th:if="${instituicao.periodoAtual == null}">Sem Periodo Letivo cadastrado</td> -->
                             <td>
                                 <form th:action="@{/instituicoes/excluir/{id}(id=${instituicao.id})}">
                                     <button type="submit" class="btn btn-purple btn-sm">Excluir</button>
