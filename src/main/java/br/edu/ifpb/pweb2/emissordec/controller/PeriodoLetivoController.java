@@ -24,6 +24,9 @@ public class PeriodoLetivoController {
     @Autowired
     PeriodoLetivoService periodoLetivoService;
 
+    @Autowired
+    InstituicaoService instituicaoService;
+
     @ModelAttribute("menu")
     public String selectMenu() {
         return "periodoLetivo";
@@ -46,6 +49,7 @@ public class PeriodoLetivoController {
         } else {
             attrs.addFlashAttribute("message", "periodoLetivo editado com sucesso!");
         }
+        periodoLetivo.getInstituicao().setPeriodoAtual(periodoLetivo);
         periodoLetivoService.insert(periodoLetivo);
         mav.setViewName("redirect:periodos");
         return mav;
@@ -86,6 +90,7 @@ public class PeriodoLetivoController {
         mav.setViewName("periodos/form");
         Optional<PeriodoLetivo> periodo = periodoLetivoService.search(id);
         mav.addObject("periodo", periodo.get());
+        periodo.get().getInstituicao().setPeriodoAtual(periodoLetivo);
         mav.addObject("titulo", "editado");
         return mav;
 
@@ -95,8 +100,8 @@ public class PeriodoLetivoController {
         return  periodoLetivoService.list();
     }
 
-    // @ModelAttribute("instituicaoItens")
-    // public List<Instituicao> getInstituicoes() {
-    //     return instituicaoService.list();
-    // }
+    @ModelAttribute("instituicaoItens")
+    public List<Instituicao> getInstituicoes() {
+         return instituicaoService.list();
+    }
 }
