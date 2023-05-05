@@ -68,6 +68,13 @@ public class DeclaracaoController {
         mav.setViewName("declaracoes/list");
         return mav;
     }
+
+    // @RequestMapping(method = RequestMethod.GET)
+    // public ModelAndView listeDeclaracoesEstudante(ModelAndView mav, Long id) {
+    //     mav.addObject("declaracoesEst", declaracaoService.searchByEst(id));
+    //     mav.setViewName("declaracoes/list");
+    //     return mav;
+    // }
     @RequestMapping("/{id}")
     public ModelAndView getDeclaracaoById(@PathVariable(value = "id") Long id, ModelAndView mav) {
         mav.addObject("declaracao", "declaracao");
@@ -100,7 +107,7 @@ public class DeclaracaoController {
     }
     @ModelAttribute("periodoLetivoItens")
     public List<PeriodoLetivo> getPeriodoLetivos() {
-        return periodoLetivoService.list();
+        return estudanteService.list().get(0).getInstituicao().getPeriodos();
     }
     @ModelAttribute("estudantesItens")
     public List<Estudante> getEstudantes() {

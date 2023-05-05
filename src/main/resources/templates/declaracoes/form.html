@@ -11,7 +11,7 @@
                     <input type="hidden" th:field="*{id}" name="id" class="form-control"/>
 
                     <label for="dataRecebimento">Data de Recebimento</label>
-                    <input type="datetime-local" th:field="*{dataRecebimento}" class="form-control"/> <br /><br />
+                    <input type="date" th:field="*{dataRecebimento}" class="form-control"/> <br /><br />
                     <p th:if="${#fields.hasErrors('dataRecebimento')}" th:errorclass="error" th:errors="*{dataRecebimento}"></p>
 
                     <label for="observacao">Observação</label>

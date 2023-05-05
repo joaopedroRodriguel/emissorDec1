@@ -33,4 +33,7 @@ public class DeclaracaoService {
     public void delete(Long id) {
         declaracaoRepository.deleteById(id);
     }
+    public List<Declaracao> searchByEst(Long id){
+        return declaracaoRepository.getDeclaracaoByEstudante(id);
+    }
 }

@@ -29,8 +29,8 @@
                                     th:text="${periodo.ano}"></a>
                             </td>
                             <td th:text="${periodo.periodo}"></td>
-                            <td th:text="${periodo.inicio}"></td>
-                            <td th:text="${periodo.fim}"></td>
+                            <td th:text="${#dates.format(periodo.inicio, 'dd/MMM/yyyy')}"></td>
+                            <td th:text="${#dates.format(periodo.fim, 'dd/MMM/yyyy')}"></td>
                             <td th:text="${periodo.instituicao.sigla}" th:if="${periodo.instituicao != null}"></td>
                             <td th:if="${periodo.instituicao == null}">Sem Instituição cadastrado</td>
                             <td th:if="${periodo.getInstituicao.getPeriodoAtual.id == periodo.id}">SIM</td>

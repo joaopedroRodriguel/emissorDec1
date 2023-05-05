@@ -8,6 +8,15 @@
     text-align: center;
 }
 
+.divBtnEst{
+    display: flex;
+    flex-direction: row;
+}
+
+.btnNovo{
+    margin-right: 15px;
+}
+
 .logo-bar img {
     vertical-align: bottom;
     margin-right: 5px;
