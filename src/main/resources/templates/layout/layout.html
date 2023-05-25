@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="pt_BR" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<head th:replace="~{/fragments/base :: headfiles(${titulo})}"></head>
+<head th:replace="~{/fragments/base :: headfiles(${titulo}, ~{::links})}">
+    <link rel="stylesheet" href="">
+</head>
 
 <body class="bg-dark">
     <div th:insert="~{/fragments/base :: menuItem}"></div>

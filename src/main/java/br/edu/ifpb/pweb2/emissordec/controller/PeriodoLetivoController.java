@@ -90,7 +90,7 @@ public class PeriodoLetivoController {
         mav.setViewName("periodos/form");
         Optional<PeriodoLetivo> periodo = periodoLetivoService.search(id);
         mav.addObject("periodo", periodo.get());
-        periodo.get().getInstituicao().setPeriodoAtual(periodoLetivo);
+        //periodo.get().getInstituicao().setPeriodoAtual(periodoLetivo);
         mav.addObject("titulo", "editado");
         return mav;
 

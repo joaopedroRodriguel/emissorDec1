@@ -58,6 +58,8 @@ public class DeclaracaoController {
         } else {
             attrs.addFlashAttribute("message", "Declaracao editada com sucesso!");
         }
+        declaracao.getEstudante().setDeclaracaoAtual(null);
+        declaracao.getEstudante().setDeclaracaoAtual(declaracao);
         declaracaoService.insert(declaracao);
         mav.setViewName("redirect:declaracoes");
         return mav;
@@ -103,6 +105,7 @@ public class DeclaracaoController {
         mav.setViewName("declaracoes/form");
         Optional<Declaracao> declaracao = declaracaoService.search(id);
         mav.addObject("declaracao", declaracao.get());
+        //declaracao.get().getEstudante().setDeclaracaoAtual(newDeclaracao);
         return mav;
     }
     @ModelAttribute("periodoLetivoItens")

@@ -1,0 +1,32 @@
+<!doctypehtml>
+    <html lang="pt_BR">
+
+    <head th:replace="~{ /fragments/base :: headfiles('Autenticação', ~{::link})}">
+        <link th:href="@{ /css/auth.css}" rel="stylesheet">
+    </head>
+
+    <body class="text-center">
+        <form class="form-signin" th:action="@{ /auth}" method="POST" th:object=${usuario}>
+            <div class="centered"><img class="mb-4" th:src="@{
+                                /imagens/logo3.png}" alt="Logo">
+                <h1 class="h3 mb-3 font-weight-normal autentique">Por favor, autentique-se</h1>
+                <div th:if="${not
+                                        #strings.isEmpty(mensagem)}"
+                    th:utext="${mensagem} +'<button type=&quot;button&quot; class=&quot;close&quot; data-dismiss=&quot;alert&quot; aria-label=&quot;Close&quot;><span aria-hidden=&quot;true&quot;>&times;</span></button>'"
+                    class="alert alert-danger alert-dismissible fade show" role="alert">
+                </div>
+                <label for="email" class="sr-only">Email</label><input type="email" class="form-control
+                                                input-login" placeholder="Email"
+                    requiredautofocusth:field="*{email}"><label for="senha" class="sr-only">Senha</label><input
+                    type="password" class="form-control
+                                                        input-login" placeholder="Senha" requiredth:field="*{senha}">
+                <div class="checkbox mb-3"><label>
+                        <input type="checkbox" value="lembrar">Lembrar-me
+                    </label></div>
+                <button class="btn btn-lg btn-primary" type="submit">
+                    Entrar</button>
+            </div>
+        </form>
+    </body>
+
+    </html>

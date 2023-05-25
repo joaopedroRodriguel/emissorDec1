@@ -25,6 +25,8 @@ public class Estudante {
     private String nome;
     @NotBlank(message = "Campo Obrigatório!")
     private String matricula;
+    @NotBlank(message = "Campo Obrigatório!")
+    private String senha;
     @ManyToOne
     @JoinColumn(name = "instituicao_id")
     @ToString.Exclude
@@ -33,5 +35,7 @@ public class Estudante {
             targetEntity=Declaracao.class,
             cascade=CascadeType.ALL)
     private List<Declaracao> declaracoes;
-
+    private boolean admin;
+    @OneToOne
+    private Declaracao declaracaoAtual;
 }

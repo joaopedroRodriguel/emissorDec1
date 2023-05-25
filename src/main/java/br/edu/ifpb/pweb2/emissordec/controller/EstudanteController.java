@@ -3,19 +3,27 @@ package br.edu.ifpb.pweb2.emissordec.controller;
 import br.edu.ifpb.pweb2.emissordec.model.Declaracao;
 import br.edu.ifpb.pweb2.emissordec.model.Estudante;
 import br.edu.ifpb.pweb2.emissordec.model.Instituicao;
+import br.edu.ifpb.pweb2.emissordec.repository.EstudanteRepository;
+import br.edu.ifpb.pweb2.emissordec.service.DeclaracaoService;
 import br.edu.ifpb.pweb2.emissordec.service.EstudanteService;
 import br.edu.ifpb.pweb2.emissordec.service.InstituicaoService;
+import br.edu.ifpb.pweb2.emissordec.ui.NavPage;
+import br.edu.ifpb.pweb2.emissordec.ui.NavePageBuilder;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +36,10 @@ public class EstudanteController {
     EstudanteService estudanteService;
     @Autowired
     InstituicaoService instituicaoService;
+    @Autowired
+    DeclaracaoService declaracaoService;
+    @Autowired
+    EstudanteRepository estudanteRepository;
     @RequestMapping("/form")
     public ModelAndView getForm(Estudante estudante, ModelAndView mav) {
         mav.setViewName("estudantes/form");
@@ -51,8 +63,15 @@ public class EstudanteController {
         return mav;
     }
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView listEstudantes(ModelAndView mav) {
-        mav.addObject("estudantes", estudanteService.list());
+    public ModelAndView listEstudantes(ModelAndView mav, @RequestParam(defaultValue = "1") int page,
+        @RequestParam(defaultValue = "3") int size) {
+
+        Pageable paging = PageRequest.of(page - 1, size);
+        Page<Estudante> pageEstudantes = estudanteRepository.findAll(paging);
+        NavPage navPage = NavePageBuilder.newNavPage(pageEstudantes.getNumber() + 1,
+                pageEstudantes.getTotalElements(), pageEstudantes.getTotalPages(), size);
+        mav.addObject("estudantes", pageEstudantes);
+        mav.addObject("navPage", navPage);
         mav.setViewName("estudantes/list");
         return mav;
     }
@@ -89,5 +108,10 @@ public class EstudanteController {
     @ModelAttribute("instituicaoItens")
     public List<Instituicao> getInstituicoes() {
         return instituicaoService.list();
+    }
+
+    @ModelAttribute("declaracaoItens")
+    public List<Declaracao> getDeclaracoes() {
+        return declaracaoService.list();
     }
 }

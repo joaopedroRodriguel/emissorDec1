@@ -5,19 +5,26 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifpb.pweb2.emissordec.model.Instituicao;
 import br.edu.ifpb.pweb2.emissordec.model.PeriodoLetivo;
+import br.edu.ifpb.pweb2.emissordec.repository.InstituicaoRepository;
 import br.edu.ifpb.pweb2.emissordec.service.InstituicaoService;
 import br.edu.ifpb.pweb2.emissordec.service.PeriodoLetivoService;
+import br.edu.ifpb.pweb2.emissordec.ui.NavPage;
+import br.edu.ifpb.pweb2.emissordec.ui.NavePageBuilder;
 
 import javax.validation.Valid;
 
@@ -28,7 +35,8 @@ public class InstituicaoController {
     InstituicaoService instituicaoService;
     @Autowired
     PeriodoLetivoService periodoLetivoService;
-
+    @Autowired
+    InstituicaoRepository instituicaoRepository;
     @RequestMapping("/form")
     public ModelAndView getForm(Instituicao instituicao,ModelAndView mav) {
         mav.setViewName("instituicoes/form");
@@ -54,8 +62,14 @@ public class InstituicaoController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView listInstituicoes(ModelAndView mav) {
-        mav.addObject("instituicoes", instituicaoService.list());
+    public ModelAndView listInstituicoes(ModelAndView mav, @RequestParam(defaultValue = "1") int page,
+    @RequestParam(defaultValue = "3") int size) {
+        Pageable paging = PageRequest.of(page - 1, size);
+        Page<Instituicao> pageInstituicoes = instituicaoRepository.findAll(paging);
+        NavPage navPage = NavePageBuilder.newNavPage(pageInstituicoes.getNumber() + 1,
+                pageInstituicoes.getTotalElements(), pageInstituicoes.getTotalPages(), size);
+        mav.addObject("instituicoes", pageInstituicoes);
+        mav.addObject("navPage", navPage);
         mav.setViewName("instituicoes/list");
         return mav;
     }
