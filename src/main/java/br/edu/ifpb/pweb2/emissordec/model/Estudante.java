@@ -25,8 +25,9 @@ public class Estudante {
     private String nome;
     @NotBlank(message = "Campo Obrigatório!")
     private String matricula;
-    @NotBlank(message = "Campo Obrigatório!")
-    private String senha;
+    @OneToOne
+    @JoinColumn(name = "username")
+    private User user;
     @ManyToOne
     @JoinColumn(name = "instituicao_id")
     @ToString.Exclude

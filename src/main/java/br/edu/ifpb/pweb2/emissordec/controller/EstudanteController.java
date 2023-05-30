@@ -3,7 +3,9 @@ package br.edu.ifpb.pweb2.emissordec.controller;
 import br.edu.ifpb.pweb2.emissordec.model.Declaracao;
 import br.edu.ifpb.pweb2.emissordec.model.Estudante;
 import br.edu.ifpb.pweb2.emissordec.model.Instituicao;
+import br.edu.ifpb.pweb2.emissordec.model.User;
 import br.edu.ifpb.pweb2.emissordec.repository.EstudanteRepository;
+import br.edu.ifpb.pweb2.emissordec.repository.UserRepository;
 import br.edu.ifpb.pweb2.emissordec.service.DeclaracaoService;
 import br.edu.ifpb.pweb2.emissordec.service.EstudanteService;
 import br.edu.ifpb.pweb2.emissordec.service.InstituicaoService;
@@ -40,6 +42,8 @@ public class EstudanteController {
     DeclaracaoService declaracaoService;
     @Autowired
     EstudanteRepository estudanteRepository;
+    @Autowired
+    UserRepository userRepository;
     @RequestMapping("/form")
     public ModelAndView getForm(Estudante estudante, ModelAndView mav) {
         mav.setViewName("estudantes/form");
@@ -113,5 +117,10 @@ public class EstudanteController {
     @ModelAttribute("declaracaoItens")
     public List<Declaracao> getDeclaracoes() {
         return declaracaoService.list();
+    }
+
+    @ModelAttribute("users")
+    public List<User> getUsersOptions(){
+        return userRepository.findByEnabledTrue();
     }
 }

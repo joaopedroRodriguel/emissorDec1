@@ -18,9 +18,12 @@
                 <input type="text" th:field="*{matricula}" name="matricula" class="form-control" /> <br /><br />
                 <p th:if="${#fields.hasErrors('matricula')}" th:errorclass="error" th:errors="*{matricula}"></p>
 
-                <label for="estudante">Senha</label>
-                <input type="password" th:field="*{senha}" name="senha" class="form-control" /> <br /><br />
-                <p th:if="${#fields.hasErrors('senha')}" th:errorclass="error" th:errors="*{senha}"></p>
+                <label for="user" class="form-label">Usuário:</label>
+                <select th:field="*{user}" class="form-select" id="user">
+                    <option th:each="u : ${users}" th:value="${u.username}" th:text="${u.username}"
+                        th:selected="${u.username==user}">
+                    </option>
+                </select>
 
                 <label for="estudante" class="form-check-label mt-1">
                     Administrador

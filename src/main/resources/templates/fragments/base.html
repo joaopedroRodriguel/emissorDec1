@@ -26,12 +26,16 @@
             <a th:classappend="${menu == 'periodoLetivo'} ? 'active'" class="nav-item nav-link menu-item"
                 th:href="@{/periodos}">Periodo</a>
         </div>
-        <div class="navbar-nav bg-blue" style="margin-right: 5px;">
-            <span style="margin-right: 3px; font-size: 0.8em;"></span>
-            <a class="nav-item nav-link menu-item px-3">
+        <!--<form class="form-inline my-2 my-lg-0" th:action="@{/auth/logout}" method="POST">
+            <span
+                sec:authorize="isAuthenticated()" sec:authentication="name"
+                style="margin-right: 3px; font-size: 0.8em;">
+            </span>
+            <button type="submit"
+                class="btn btn-outline-success my-2 my-sm-0">
                 Sair
-            </a>
-        </div>
+            </button>
+        </form>-->
     </nav>
 </div>
 

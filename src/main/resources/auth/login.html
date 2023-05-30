@@ -6,7 +6,7 @@
     </head>
 
     <body class="text-center">
-        <form class="form-signin" th:action="@{ /auth}" method="POST" th:object=${usuario}>
+        <form class="form-signin" th:action="@{/auth}" method="POST">
             <div class="centered"><img class="mb-4" th:src="@{
                                 /imagens/logo3.png}" alt="Logo">
                 <h1 class="h3 mb-3 font-weight-normal autentique">Por favor, autentique-se</h1>
@@ -15,16 +15,19 @@
                     th:utext="${mensagem} +'<button type=&quot;button&quot; class=&quot;close&quot; data-dismiss=&quot;alert&quot; aria-label=&quot;Close&quot;><span aria-hidden=&quot;true&quot;>&times;</span></button>'"
                     class="alert alert-danger alert-dismissible fade show" role="alert">
                 </div>
-                <label for="email" class="sr-only">Email</label><input type="email" class="form-control
-                                                input-login" placeholder="Email"
-                    requiredautofocusth:field="*{email}"><label for="senha" class="sr-only">Senha</label><input
-                    type="password" class="form-control
-                                                        input-login" placeholder="Senha" requiredth:field="*{senha}">
-                <div class="checkbox mb-3"><label>
+                <label for="email" class="sr-only">Email</label>
+                <input type="text" class="form-control input-login" placeholder="Username" required autofocus name="username">
+                
+                <label for="senha" class="sr-only">Senha</label>
+                <input type="password" class="form-control input-login" placeholder="Senha" required name="password">
+                <div class="checkbox mb-3">
+                    <label>
                         <input type="checkbox" value="lembrar">Lembrar-me
-                    </label></div>
+                    </label>
+                </div>
                 <button class="btn btn-lg btn-primary" type="submit">
-                    Entrar</button>
+                    Entrar
+                </button>
             </div>
         </form>
     </body>

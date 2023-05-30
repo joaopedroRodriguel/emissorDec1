@@ -26,8 +26,7 @@
                             <th>Nome</th>
                             <th>Matricula</th>
                             <th>Instituição</th>
-                            <th>Admin?</th>
-                            <th></th>
+                            <th>Usuário</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -40,8 +39,7 @@
                             <td th:text="${estudante.instituicao.nome}" th:if="${estudante.instituicao != null}">
                             </td>
                             <td th:if="${estudante.instituicao == null}">Sem Instituição cadastrada</td>
-                            <td th:if="${estudante.admin == true}">SIM</td>
-                            <td th:if="${estudante.admin == false}">NÃO</td>
+                            <td class="text-center" th:text="${estudante.user != null ? estudante.user.username : 'Sem usuário'}"></td>
                             <td>
                                 <form th:action="@{/estudantes/excluir/{id}(id=${estudante.id})}">
                                     <button type="submit" class="btn btn-purple btn-sm">Excluir</button>
