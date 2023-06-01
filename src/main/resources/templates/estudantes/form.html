@@ -20,6 +20,7 @@
 
                 <label for="user" class="form-label">Usuário:</label>
                 <select th:field="*{user}" class="form-select" id="user">
+                    <option th:text="'Nenhum Usuário'" value="null"></option>
                     <option th:each="u : ${users}" th:value="${u.username}" th:text="${u.username}"
                         th:selected="${u.username==user}">
                     </option>

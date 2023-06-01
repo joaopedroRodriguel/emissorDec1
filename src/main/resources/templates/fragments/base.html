@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/auth.css}" />
     <!--<th:block th:replace="${links}" />-->
 
     <title th:text="'EmissorDec - ' + ${titulo}"></title>
@@ -26,16 +27,16 @@
             <a th:classappend="${menu == 'periodoLetivo'} ? 'active'" class="nav-item nav-link menu-item"
                 th:href="@{/periodos}">Periodo</a>
         </div>
-        <!--<form class="form-inline my-2 my-lg-0" th:action="@{/auth/logout}" method="POST">
+        <form class="form-inline my-2 my-lg-0" th:action="@{/auth/logout}" method="POST">
             <span
+                class="color-white"
                 sec:authorize="isAuthenticated()" sec:authentication="name"
                 style="margin-right: 3px; font-size: 0.8em;">
             </span>
-            <button type="submit"
-                class="btn btn-outline-success my-2 my-sm-0">
-                Sair
-            </button>
-        </form>-->
+            <a th:href="@{/auth/logout}">
+                <button class="btn bg-blue color-white my-2 my-sm-0">Sair</button>
+            </a>
+        </form>
     </nav>
 </div>
 

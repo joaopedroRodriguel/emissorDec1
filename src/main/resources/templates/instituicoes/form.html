@@ -22,7 +22,7 @@
                
                 <label for="periodoAtual">Período Letivo Atual</label>
                 <select th:field="*{periodoAtual.id}" class="form-control" id="option-card">
-                    <!-- <option th:value=null>Sem período</option> -->
+                    <!-- <option th:text="'Sem período'" value="null"></option> -->
                     <option th:each="pl : ${periodosItens}" th:value="${pl.id}" th:text="${pl.ano} + '.' + ${pl.periodo}" />
                 </select>
                 <br /><br />

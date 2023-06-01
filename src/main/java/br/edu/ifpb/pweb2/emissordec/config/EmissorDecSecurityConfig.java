@@ -5,11 +5,12 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+@EnableWebSecurity
 public class EmissorDecSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -27,8 +28,8 @@ public class EmissorDecSecurityConfig extends WebSecurityConfigurerAdapter {
         .formLogin((form) -> form
                 .loginPage("/auth")
                 .defaultSuccessUrl("/home", true)
-                .permitAll());
-        //.logout(logout -> logout.logoutUrl("/auth/logout"));
+                .permitAll())
+        .logout(logout -> logout.logoutUrl("/auth/logout"));
     }
 
     @Override
@@ -37,12 +38,12 @@ public class EmissorDecSecurityConfig extends WebSecurityConfigurerAdapter {
 
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
-                .passwordEncoder(encoder)
-                .withUser(
-                    User.builder().username("turing").password(encoder.encode("enignma")).roles("CLIENTE").build()
-                )
-                .withUser(User.builder().username("sagan").password(encoder.encode("cosmos")).roles("CLIENTE").build()
-                )
-                .withUser(User.builder().username("admin").password(encoder.encode("admin123")).roles("CLIENTE","ADMIN").build());
+                .passwordEncoder(encoder);
+                // .withUser(
+                //     User.builder().username("turing").password(encoder.encode("enignma")).roles("CLIENTE").build()
+                // )
+                // .withUser(User.builder().username("sagan").password(encoder.encode("cosmos")).roles("CLIENTE").build()
+                // )
+                // .withUser(User.builder().username("admin").password(encoder.encode("admin123")).roles("CLIENTE","ADMIN").build());
     }
 }

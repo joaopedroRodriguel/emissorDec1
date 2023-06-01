@@ -26,6 +26,7 @@
 
                     <label for="instituicao">Instituição</label>
                     <select th:field="*{instituicao}" class="form-control" id="option-card">
+                        <!-- <option th:text="'Sem Instituição'" value="null"></option> -->
                         <option th:each="inst : ${instituicaoItens}" th:value="${inst.id}" th:text="${inst.nome}" />
                     </select><br><br>
 

@@ -1,5 +1,7 @@
 package br.edu.ifpb.pweb2.emissordec.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,4 +18,15 @@ public class AuthController {
         modelAndView.setViewName("auth/login");
         return modelAndView;
     }
+
+    @RequestMapping("/logout")
+    public ModelAndView logout(ModelAndView mav, HttpSession session) {
+        session.invalidate();
+        mav.setViewName("redirect:/auth");
+        return mav;
+    }
+
+
 }
+
+

@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,13 +69,14 @@ public class EstudanteController {
     }
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView listEstudantes(ModelAndView mav, @RequestParam(defaultValue = "1") int page,
-        @RequestParam(defaultValue = "3") int size) {
+        @RequestParam(defaultValue = "3") int size,  Principal principal) {
 
         Pageable paging = PageRequest.of(page - 1, size);
         Page<Estudante> pageEstudantes = estudanteRepository.findAll(paging);
         NavPage navPage = NavePageBuilder.newNavPage(pageEstudantes.getNumber() + 1,
                 pageEstudantes.getTotalElements(), pageEstudantes.getTotalPages(), size);
         mav.addObject("estudantes", pageEstudantes);
+        mav.addObject("user", estudanteRepository.findByUsername(principal.getName()));
         mav.addObject("navPage", navPage);
         mav.setViewName("estudantes/list");
         return mav;
