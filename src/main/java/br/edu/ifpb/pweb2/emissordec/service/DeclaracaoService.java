@@ -36,4 +36,8 @@ public class DeclaracaoService {
     public List<Declaracao> searchByEst(Long id){
         return declaracaoRepository.getDeclaracaoByEstudante(id);
     }
+
+    public List<Declaracao> declaracoesVencidas() {
+        return declaracaoRepository.buscarDeclaracaoVencidas();
+    }
 }

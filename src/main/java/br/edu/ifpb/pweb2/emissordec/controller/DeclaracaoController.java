@@ -9,6 +9,7 @@ import br.edu.ifpb.pweb2.emissordec.service.InstituicaoService;
 import br.edu.ifpb.pweb2.emissordec.service.PeriodoLetivoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.http.HttpStatus;
 
 
 import javax.validation.Valid;
@@ -108,6 +110,12 @@ public class DeclaracaoController {
         //declaracao.get().getEstudante().setDeclaracaoAtual(newDeclaracao);
         return mav;
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/declaracoesvencidas")
+    public ResponseEntity<?> declaracoesvencidas() {
+        return new ResponseEntity<>(declaracaoService.declaracoesVencidas(), HttpStatus.ACCEPTED);
+    }
+
     @ModelAttribute("periodoLetivoItens")
     public List<PeriodoLetivo> getPeriodoLetivos() {
         return estudanteService.list().get(0).getInstituicao().getPeriodos();
