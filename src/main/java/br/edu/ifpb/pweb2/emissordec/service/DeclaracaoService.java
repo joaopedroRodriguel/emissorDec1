@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,5 +40,11 @@ public class DeclaracaoService {
 
     public List<Declaracao> declaracoesVencidas() {
         return declaracaoRepository.buscarDeclaracaoVencidas();
+    }
+
+    public List<Declaracao> DeclaracoesPorVencer(int qtddDias) {
+        LocalDate dataVencimento = LocalDate.now().plusDays(qtddDias);
+        List<Declaracao> declaracoes = declaracaoRepository.buscarDataVencimento(dataVencimento);
+        return declaracoes;
     }
 }
