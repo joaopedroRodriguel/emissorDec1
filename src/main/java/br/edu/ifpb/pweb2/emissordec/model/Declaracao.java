@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -21,6 +22,7 @@ public class Declaracao {
     private Long id;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dataRecebimento;
+    private LocalDate dataVencimento;
     private String observacao;
 
     @ManyToOne
