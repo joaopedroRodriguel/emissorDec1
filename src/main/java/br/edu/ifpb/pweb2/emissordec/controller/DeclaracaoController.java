@@ -46,6 +46,12 @@ public class DeclaracaoController {
         mav.addObject("declaracao", declaracao);
         return mav;
     }
+    @RequestMapping("/consultas")
+    public ModelAndView getConsultas(Declaracao declaracao, ModelAndView mav) {
+        mav.setViewName("declaracoes/queries");
+        mav.addObject("declaracao", declaracao);
+        return mav;
+    }
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView save(@Valid Declaracao declaracao, ModelAndView mav, BindingResult validation, RedirectAttributes attrs) {
         if (validation.hasErrors()) {

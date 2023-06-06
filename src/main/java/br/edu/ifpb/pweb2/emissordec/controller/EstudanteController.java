@@ -54,6 +54,7 @@ public class EstudanteController {
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView save(@Valid Estudante estudante, ModelAndView mav, BindingResult validation, RedirectAttributes attrs) {
         if (validation.hasErrors()) {
+            mav.addObject("message", "Erros de validação! Corrija-os e tente novamente.");
             mav.setViewName("estudantes/form");
             return mav;
         }

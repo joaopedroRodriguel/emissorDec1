@@ -5,7 +5,10 @@
     <body class="text-center bg-dark">
         <form th:action="@{/auth}" method="POST">
             <div class="centered form-signin">
-                <img class="mb-4" th:src="@{/imagens/logo3.png}" alt="Logo">
+                <div class="logo-bar mb-4">
+                    <img class="" th:src="@{/imagens/logo3.png}" alt="Logo">
+                    <i class="bi bi-bug-fill"></i>
+                </div>
                 <h1 class="h3 mb-3 font-weight-normal autentique color-white">Por favor, autentique-se</h1>
                 <!-- <div th:if="${not #strings.isEmpty(mensagem)}"
                     th:utext="${mensagem} +'<button type=&quot;button&quot; class=&quot;close&quot; data-dismiss=&quot;alert&quot; aria-label=&quot;Close&quot;><span aria-hidden=&quot;true&quot;>&times;</span></button>'"
