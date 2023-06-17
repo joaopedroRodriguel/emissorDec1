@@ -2,14 +2,25 @@ package br.edu.ifpb.pweb2.emissordec.service;
 
 import br.edu.ifpb.pweb2.emissordec.model.Declaracao;
 import br.edu.ifpb.pweb2.emissordec.repository.DeclaracaoRepository;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfDocument;
+import com.itextpdf.text.pdf.PdfWriter;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.w3c.dom.Text;
 
 import javax.transaction.Transactional;
+import java.io.ByteArrayOutputStream;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+
+
 
 @Service
 public class DeclaracaoService {
@@ -47,4 +58,5 @@ public class DeclaracaoService {
         List<Declaracao> declaracoes = declaracaoRepository.buscarDataVencimento(dataVencimento);
         return declaracoes;
     }
+
 }
