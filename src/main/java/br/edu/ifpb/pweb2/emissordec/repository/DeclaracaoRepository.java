@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import br.edu.ifpb.pweb2.emissordec.model.Documento;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,6 +24,9 @@ public interface DeclaracaoRepository extends JpaRepository<Declaracao, Long> {
 
     @Query("SELECT d FROM Declaracao d WHERE d.dataVencimento = :dataVencimento")
     List<Declaracao> buscarDataVencimento(@Param("dataVencimento") LocalDate dataVencimento);
+
+    @Query(value = "select d.documento from Declaracao d where d.id = :idDeclaracao")
+    Documento findDocumentoById(@Param ("idDeclaracao") Long idDeclaracao);
 
 }
 

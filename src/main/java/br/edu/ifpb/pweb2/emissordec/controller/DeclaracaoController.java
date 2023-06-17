@@ -1,24 +1,24 @@
 package br.edu.ifpb.pweb2.emissordec.controller;
 
 import br.edu.ifpb.pweb2.emissordec.model.Declaracao;
+import br.edu.ifpb.pweb2.emissordec.model.Documento;
 import br.edu.ifpb.pweb2.emissordec.model.Estudante;
 import br.edu.ifpb.pweb2.emissordec.model.PeriodoLetivo;
-import br.edu.ifpb.pweb2.emissordec.service.DeclaracaoService;
-import br.edu.ifpb.pweb2.emissordec.service.EstudanteService;
-import br.edu.ifpb.pweb2.emissordec.service.InstituicaoService;
-import br.edu.ifpb.pweb2.emissordec.service.PeriodoLetivoService;
+import br.edu.ifpb.pweb2.emissordec.repository.DeclaracaoRepository;
+import br.edu.ifpb.pweb2.emissordec.service.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
 import javax.validation.Valid;
@@ -37,6 +37,12 @@ public class DeclaracaoController {
     EstudanteService estudanteService;
     @Autowired
     InstituicaoService instituicaoService;
+
+    @Autowired
+    DocumentoService documentoService;
+
+    @Autowired
+    DeclaracaoRepository declaracaoRepository;
 
     @ModelAttribute("menu")
     public String selectMenu() {
@@ -117,6 +123,65 @@ public class DeclaracaoController {
         //declaracao.get().getEstudante().setDeclaracaoAtual(newDeclaracao);
         return mav;
     }
+
+    @RequestMapping("/{id}/documentos")
+    public ModelAndView getDocumentos(@PathVariable ("id") Long id, ModelAndView mav) {
+        Optional<Documento> documento = documentoService.getDocumentoOf(id);
+        if (documento.isPresent()) {
+            mav.addObject("documento", documento.get());
+        }
+        mav.setViewName("declaracoes/documentos/list");
+        return mav;
+    }
+
+    @RequestMapping(value = "/{id}/documentos/upload", method = RequestMethod.POST)
+    public ModelAndView uploadFile(@RequestParam("file") MultipartFile arquivo,
+                                   @PathVariable("id") Long id, ModelAndView mav) {
+        String mensagem = "";
+        String proxPagina = "";
+        try {
+            Optional<Declaracao> opDeclaracao = declaracaoRepository.findById(id);
+            Declaracao declaracao = null;
+            if (opDeclaracao.isPresent()) {
+                declaracao = opDeclaracao.get();
+                String nomeArquivo = StringUtils.cleanPath(arquivo.getOriginalFilename());
+                Documento documento = documentoService.grave(declaracao, nomeArquivo, arquivo.getBytes());
+                documento.setUrl(this.buildUrl(declaracao.getId(), documento.getId()));
+                declaracaoRepository.save(declaracao);
+                mensagem = "Documento carregado com sucesso: " + arquivo.getOriginalFilename();
+                proxPagina = String.format("redirect:/declaracoes/%s/documentos", declaracao.getId().toString());
+            }
+        } catch (Exception e) {
+            mensagem = "Não foi possível carregar o documento: " + arquivo.getOriginalFilename() + "! "
+                    + e.getMessage();
+            proxPagina = "/declaracoes/documentos/form";
+        }
+        mav.addObject("mensagem", mensagem);
+        mav.setViewName(proxPagina);
+        return mav;
+    }
+
+    private String buildUrl(Long idDeclaracao, Long idDocumento) {
+        String fileDownloadUri = ServletUriComponentsBuilder
+                .fromCurrentContextPath()
+                .path("/declaracoes/")
+                .path(idDeclaracao.toString())
+                .path("/documentos/")
+                .path(idDocumento.toString())
+                .toUriString();
+        return fileDownloadUri;
+    }
+
+    @RequestMapping("/{id}/documentos/{idDoc}")
+    public ResponseEntity<byte[]> getDocumento(@PathVariable("idDoc") Long idDoc) {
+        Documento documento = documentoService.getDocumento(idDoc);
+
+        return ResponseEntity
+                .ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + documento.getNome() + "\"")
+                .body(documento.getDados());
+    }
+
 
     @RequestMapping(method = RequestMethod.GET, value = "/declaracoesvencidas")
     public ResponseEntity<?> declaracoesvencidas() {

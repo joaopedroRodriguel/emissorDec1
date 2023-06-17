@@ -27,6 +27,10 @@ public class Declaracao {
     private Date dataVencimento;
     private String observacao;
 
+    @OneToOne
+    @JoinColumn(name = "documento_id")
+    private Documento documento;
+
     @ManyToOne
     @JoinColumn(name = "estudante_id")
     private Estudante estudante;
