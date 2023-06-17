@@ -12,13 +12,15 @@
 
                 <label for="instituicao">Nome</label>
                 <input type="text" th:field="*{nome}" name="nome" class="form-control" /> <br /><br />
+                <p class="texto-erro" th:if="${#fields.hasErrors('nome')}" th:errorclass="error" th:errors="*{nome}"></p>
 
                 <label for="instituicao">Sigla</label>
                 <input type="text" th:field="*{sigla}" name="sigla" class="form-control" /> <br /><br />
+                <p class="texto-erro" th:if="${#fields.hasErrors('sigla')}" th:errorclass="error" th:errors="*{sigla}"></p>
 
                 <label for="instituicao">Telefone</label>
                 <input type="text" th:field="*{fone}" name="telefone" class="form-control" /> <br /><br />
-                <p th:if="${#fields.hasErrors('fone')}" th:errorclass="error" th:errors="*{fone}"></p>
+                <p class="texto-erro" th:if="${#fields.hasErrors('fone')}" th:errorclass="error" th:errors="*{fone}"></p>
                
                 <label for="periodoAtual">Período Letivo Atual</label>
                 <select th:field="*{periodoAtual.id}" class="form-control" id="option-card">

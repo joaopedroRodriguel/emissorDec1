@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Future;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -22,7 +23,8 @@ public class Declaracao {
     private Long id;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dataRecebimento;
-    private LocalDate dataVencimento;
+    @Future(message = "Data deve ser futura")
+    private Date dataVencimento;
     private String observacao;
 
     @ManyToOne

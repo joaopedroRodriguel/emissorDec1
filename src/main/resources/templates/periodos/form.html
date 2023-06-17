@@ -12,13 +12,15 @@
                     
                     <label for="periodo">Ano</label>
                     <input type="number" th:field="*{ano}" name="Ano" class="form-control" /> <br /><br />
+                    <p class="texto-erro" th:if="${#fields.hasErrors('ano')}" th:errorclass="error" th:errors="*{ano}"></p>
 
                     <label for="periodo">Período</label>
                     <input type="number" th:field="*{periodo}" name="periodo" class="form-control" /> <br /><br />
+                    <p class="texto-erro" th:if="${#fields.hasErrors('periodo')}" th:errorclass="error" th:errors="*{periodo}"></p>
 
                     <label for="periodo">Início do Período</label>
                     <input type="date" th:field="*{inicio}" class="form-control"/> <br /><br />
-                    <p th:if="${#fields.hasErrors('inicio')}" th:errorclass="error" th:errors="*{inicio}"></p>
+                    <p class="texto-erro" th:if="${#fields.hasErrors('inicio')}" th:errorclass="error" th:errors="*{inicio}"></p>
 
                     <label for="periodo">Fim do Período</label>
                     <input type="date" th:field="*{fim}" class="form-control"/> <br /><br />

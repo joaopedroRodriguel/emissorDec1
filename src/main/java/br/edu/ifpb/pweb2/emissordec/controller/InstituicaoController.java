@@ -45,8 +45,9 @@ public class InstituicaoController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView save(@Valid Instituicao instituicao, ModelAndView mav, BindingResult validation, RedirectAttributes attrs) {
+    public ModelAndView save(@Valid Instituicao instituicao, BindingResult validation, ModelAndView mav, RedirectAttributes attrs) {
         if (validation.hasErrors()) {
+            mav.addObject("message", "Erros de validação! Corrija-os e tente novamente.");
             mav.setViewName("instituicoes/form");
             return mav;
         }
