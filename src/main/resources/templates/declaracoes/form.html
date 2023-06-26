@@ -14,6 +14,10 @@
                     <input type="date" th:field="*{dataRecebimento}" class="form-control"/> <br /><br />
                     <p class="texto-erro" th:if="${#fields.hasErrors('dataRecebimento')}" th:errorclass="error" th:errors="*{dataRecebimento}"></p>
 
+                    <label for="dataVencimento">Data de Vencimento</label>
+                    <input type="date" th:field="*{dataVencimento}" class="form-control"/> <br /><br />
+                    <p class="texto-erro" th:if="${#fields.hasErrors('dataVencimento')}" th:errorclass="error" th:errors="*{dataVencimento}"></p>
+
                     <label for="observacao">Observação</label>
                     <textarea cols="50" rows="5" th:field="*{observacao}" class="form-control" placeholder="Coloque aqui alguma observação.">                        
                     </textarea>

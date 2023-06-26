@@ -23,6 +23,7 @@ public class Declaracao {
     private Long id;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dataRecebimento;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Future(message = "Data deve ser futura")
     private Date dataVencimento;
     private String observacao;
