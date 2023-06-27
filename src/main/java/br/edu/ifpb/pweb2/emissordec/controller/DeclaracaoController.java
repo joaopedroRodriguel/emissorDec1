@@ -86,6 +86,13 @@ public class DeclaracaoController {
         return mav;
     }
 
+    @RequestMapping("/vencidas")
+    public ModelAndView listarDeclaracoesVencidas(ModelAndView mav) {
+        mav.addObject("declaracoes", declaracaoService.declaracoesVencidas());
+        mav.setViewName("declaracoes/list");
+        return mav;
+    }
+
     // @RequestMapping(method = RequestMethod.GET)
     // public ModelAndView listeDeclaracoesEstudante(ModelAndView mav, Long id) {
     //     mav.addObject("declaracoesEst", declaracaoService.searchByEst(id));

@@ -28,5 +28,19 @@ public interface DeclaracaoRepository extends JpaRepository<Declaracao, Long> {
     @Query(value = "select d.documento from Declaracao d where d.id = :idDeclaracao")
     Documento findDocumentoById(@Param ("idDeclaracao") Long idDeclaracao);
 
+
+    @Query(value = "SELECT * FROM tb_declaracao WHERE data_vencimento < CURRENT_DATE", nativeQuery = true)
+    List<Declaracao> buscarDeclaracaoVencida();
+
+    
+    /*@Query(value = "SELECT * FROM tb_declaracao WHERE data_vencimento < :dataDesejada")
+    List<Declaracao> buscarDeclaracaoVencida(@Param("dataAtual") LocalDate CURRANTE_DATE);
+    List<Declaracao> findByStartDateBeforeDateNow
+
+    SELECT * FROM `tb_declaracao` WHERE data_vencimento < CURRENT_DATE;
+
+    */
+    
+
 }
 
