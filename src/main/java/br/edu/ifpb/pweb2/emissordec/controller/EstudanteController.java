@@ -126,4 +126,12 @@ public class EstudanteController {
     public List<User> getUsersOptions(){
         return userRepository.findByEnabledTrue();
     }
+
+    @RequestMapping("/semDeclaracoes")
+    public ModelAndView alunosSemDeclaracoes(ModelAndView mav ) {
+        mav.addObject("estudantes", estudanteService.semDeclaracoes());
+        mav.setViewName("estudantes/listSemDeclaracao");
+        return mav;
+    }    
+     
 }

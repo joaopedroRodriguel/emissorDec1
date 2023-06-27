@@ -50,7 +50,7 @@ public class DeclaracaoService {
     }
 
     public List<Declaracao> declaracoesVencidas() {
-        return declaracaoRepository.buscarDeclaracaoVencidas();
+        return declaracaoRepository.buscarDeclaracaoVencida();
     }
 
     public List<Declaracao> DeclaracoesPorVencer(int qtddDias) {

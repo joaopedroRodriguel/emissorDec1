@@ -1,0 +1,15 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:insert="~{layout/layout}"
+    th:with="titulo='Listagem de Periodos'">
+
+<body>
+    <div layout:fragment="content">
+        <h1>Pesquisas</h1>
+            <ul>
+                <li><a th:href="@{/declaracoes/vencidas}">Declarações Vencidas dos Estudantes</a></li>
+                <li><a th:href="@{/estudantes/semDeclaracoes}">Declarações por vencer em n dias</a></li>
+                <li><a th:href="@{/estudantes/semDeclaracoes}">Alunos que não apresentam declarações</a></li>                
+        </ul>        
+    </div>
+</body>
+
+</html>

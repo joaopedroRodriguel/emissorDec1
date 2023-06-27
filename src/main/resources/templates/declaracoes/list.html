@@ -52,8 +52,8 @@
                                 th:if="${declaracao.periodoLetivo != null}">
                             </td>
                             <td th:if="${declaracao.periodoLetivo == null}">Sem Periodo Letivo cadastrado</td>
-                            <td th:if="${declaracao.getEstudante.declaracaoAtual == declaracao}">SIM</td>
-                            <td th:if="${declaracao.getEstudante.declaracaoAtual != declaracao}">NÃO</td>
+                           <!-- <td th:if="${declaracao.getEstudante.declaracaoAtual == declaracao}">SIM</td>
+                            <td th:if="${declaracao.getEstudante.declaracaoAtual != declaracao}">NÃO</td> -->
                             <td>
                                 <form th:action="@{/declaracoes/excluir/{id}(id=${declaracao.id})}">
                                     <button type="submit" class="btn btn-purple btn-sm">Excluir</button>
