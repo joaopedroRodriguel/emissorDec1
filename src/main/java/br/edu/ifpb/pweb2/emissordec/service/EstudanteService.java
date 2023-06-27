@@ -1,5 +1,6 @@
 package br.edu.ifpb.pweb2.emissordec.service;
 
+import br.edu.ifpb.pweb2.emissordec.model.Declaracao;
 import br.edu.ifpb.pweb2.emissordec.model.Estudante;
 import br.edu.ifpb.pweb2.emissordec.model.Instituicao;
 import br.edu.ifpb.pweb2.emissordec.repository.EstudanteRepository;
@@ -34,5 +35,9 @@ public class EstudanteService {
     }
     public void delete(Long id) {
         estudanteRepository.deleteById(id);
+    }
+
+    public List<Estudante> semDeclaracoes() {
+        return estudanteRepository.listarEstudantesSemDeclaracoes();
     }
 }

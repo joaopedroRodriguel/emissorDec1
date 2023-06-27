@@ -14,8 +14,8 @@ import java.util.Optional;
 public interface EstudanteRepository extends JpaRepository<Estudante, Long> {
 
     Optional<Estudante> getEstudanteByMatricula(String matricula);
-    @Query(value = "select * from tb_estudante where declaracao_atual_declaracao_id is null ",nativeQuery = true)
-    List<Declaracao> listarEstudanteDeclaracaoVencida();
+    @Query(value = "SELECT e.* from tb_estudante e LEFT JOIN tb_declaracao d on d.estudante_id = e.estudante_id WHERE d.estudante_id is null ", nativeQuery = true)
+    List<Estudante> listarEstudantesSemDeclaracoes();
 
     @Query("from Estudante e join fetch e.user u where u.username = :username")
     Estudante findByUsername(@Param("username") String username);
