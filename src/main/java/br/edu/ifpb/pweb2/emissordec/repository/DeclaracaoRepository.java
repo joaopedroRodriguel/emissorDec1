@@ -33,11 +33,10 @@ public interface DeclaracaoRepository extends JpaRepository<Declaracao, Long> {
     List<Declaracao> buscarDeclaracaoVencida();
 
     
-    /*@Query(value = "SELECT * FROM tb_declaracao WHERE data_vencimento < :dataDesejada")
-    List<Declaracao> buscarDeclaracaoVencida(@Param("dataAtual") LocalDate CURRANTE_DATE);
-    List<Declaracao> findByStartDateBeforeDateNow
+    @Query(value = "SELECT * FROM `tb_declaracao` WHERE `data_vencimento` BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL :qtdDias DAY)", nativeQuery = true)
+    List<Declaracao> declaracoNDias(@Param ("qtdDias") Long qtdDias);
 
-    SELECT * FROM `tb_declaracao` WHERE data_vencimento < CURRENT_DATE;
+    /*SELECT * FROM `tb_declaracao` WHERE `data_vencimento` BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 10 DAY)
 
     */
     

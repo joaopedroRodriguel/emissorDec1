@@ -112,6 +112,16 @@ public class DeclaracaoController {
         }
         return mav;
     }
+
+
+    @RequestMapping("/declaracoesValidas/{dias}")
+    public ModelAndView getDeclaracaoVencida(@PathVariable(value = "dias") Long dias, ModelAndView mav) {
+        mav.setViewName("declaracoes/list");                
+        mav.addObject("declaracoes", declaracaoService.DeclaracoesPorVencer(dias));                            
+        return mav;
+    }
+
+
     @RequestMapping("/excluir/{id}")
     public ModelAndView deleteDeclaracaoById(@PathVariable("id") Long id, ModelAndView mav, RedirectAttributes attr) {
         Optional<Declaracao> declaracao = declaracaoService.search(id);

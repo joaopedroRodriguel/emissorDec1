@@ -5,8 +5,14 @@
     <div layout:fragment="content">
         <h1>Pesquisas</h1>
             <ul>
-                <li><a th:href="@{/declaracoes/vencidas}">Declarações Vencidas dos Estudantes</a></li>
-                <li><a th:href="@{/estudantes/semDeclaracoes}">Declarações por vencer em n dias</a></li>
+                <li><a th:href="@{/declaracoes/vencidas}">Declarações Vencidas dos Estudantes</a></li>                
+                <li>
+                    <form th:action="@{declaracoes/declaracoesValidas/}">
+                        Declarações por vencer em n dias
+                        <input type="number" name="dias" th:value="*{dias}">
+                        <button type="submit" class="btn btn-purple">Buscar Delcarações</button>
+                    </form>
+                </li>
                 <li><a th:href="@{/estudantes/semDeclaracoes}">Alunos que não apresentam declarações</a></li>                
         </ul>        
     </div>

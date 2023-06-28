@@ -53,10 +53,11 @@ public class DeclaracaoService {
         return declaracaoRepository.buscarDeclaracaoVencida();
     }
 
-    public List<Declaracao> DeclaracoesPorVencer(int qtddDias) {
-        LocalDate dataVencimento = LocalDate.now().plusDays(qtddDias);
-        List<Declaracao> declaracoes = declaracaoRepository.buscarDataVencimento(dataVencimento);
+    public List<Declaracao> DeclaracoesPorVencer(Long qtddDias) {        
+        List<Declaracao> declaracoes = declaracaoRepository.declaracoNDias(qtddDias);
         return declaracoes;
     }
+
+
 
 }
