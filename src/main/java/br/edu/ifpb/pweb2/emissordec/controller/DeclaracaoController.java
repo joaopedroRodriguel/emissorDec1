@@ -60,6 +60,7 @@ public class DeclaracaoController {
         mav.addObject("declaracao", declaracao);
         return mav;
     }
+    
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView save(@Valid Declaracao declaracao, BindingResult validation, ModelAndView mav, RedirectAttributes attrs) {
         if (validation.hasErrors()) {
@@ -79,6 +80,53 @@ public class DeclaracaoController {
         mav.setViewName("redirect:declaracoes");
         return mav;
     }
+
+    /*
+     @RequestMapping(method = RequestMethod.POST)
+public ModelAndView save(@Valid Declaracao declaracao, BindingResult validation, ModelAndView mav, RedirectAttributes attrs,
+                         @RequestParam("file") MultipartFile file) {
+    if (validation.hasErrors()) {
+        mav.addObject("message", "Erros de validação! Corrija-os e tente novamente.");
+        mav.setViewName("declaracoes/form");
+        return mav;
+    }
+
+    if (!file.isEmpty()) {
+        // Verifique se o arquivo é um PDF e faça o processamento necessário
+        if (file.getContentType().equals("application/pdf")) {
+            try {
+                // Salve o arquivo em algum local ou faça o processamento necessário
+                byte[] fileData = file.getBytes();
+                Documento documento = new Documento();
+                documento.setNome(file.getOriginalFilename());
+                documento.setDados(fileData);
+                declaracao.setDocumento(documento);
+            } catch (Exception e) {
+                mav.addObject("message", "Erro ao processar o arquivo PDF.");
+                mav.setViewName("declaracoes/form");
+                return mav;
+            }
+        } else {
+            mav.addObject("message", "O arquivo deve ser um PDF.");
+            mav.setViewName("declaracoes/form");
+            return mav;
+        }
+    }
+
+    if (declaracao.getId() == null) {
+        attrs.addFlashAttribute("message", "Declaração cadastrada com sucesso!");
+    } else {
+        attrs.addFlashAttribute("message", "Declaração editada com sucesso!");
+    }
+
+    declaracao.getEstudante().setDeclaracaoAtual(null);
+    declaracao.getEstudante().setDeclaracaoAtual(declaracao);
+    declaracaoService.insert(declaracao);
+    mav.setViewName("redirect:declaracoes");
+    return mav;
+}*/
+
+     
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView listeDeclaracoes(ModelAndView mav) {
         mav.addObject("declaracoes", declaracaoService.list());
@@ -114,8 +162,8 @@ public class DeclaracaoController {
     }
 
 
-    @RequestMapping("/declaracoesValidas/{dias}")
-    public ModelAndView getDeclaracaoVencida(@PathVariable(value = "dias") Long dias, ModelAndView mav) {
+    @RequestMapping("/declaracoesValidas")
+    public ModelAndView getDeclaracaoVencida(@RequestParam("dias") Long dias, ModelAndView mav) {
         mav.setViewName("declaracoes/list");                
         mav.addObject("declaracoes", declaracaoService.DeclaracoesPorVencer(dias));                            
         return mav;

@@ -33,4 +33,8 @@ public class Documento implements Serializable {
         this.nome = nome;
         this.dados = dados;
     }
+
+    public void setDados(byte[] dados) {
+    this.dados = dados;
+}
 }

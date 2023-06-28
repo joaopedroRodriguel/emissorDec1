@@ -7,9 +7,9 @@
             <ul>
                 <li><a th:href="@{/declaracoes/vencidas}">Declarações Vencidas dos Estudantes</a></li>                
                 <li>
-                    <form th:action="@{declaracoes/declaracoesValidas/}">
+                    <form th:action="@{declaracoes/declaracoesValidas(dias=${dias})}">
                         Declarações por vencer em n dias
-                        <input type="number" name="dias" th:value="*{dias}">
+                        <input type="number" name="dias">
                         <button type="submit" class="btn btn-purple">Buscar Delcarações</button>
                     </form>
                 </li>

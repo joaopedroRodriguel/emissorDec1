@@ -35,6 +35,12 @@
                     </select>
                     <br /><br />
 
+                    
+                    <input type="file" th:field="*{documento}" name="file" accept=".pdf" />
+                    <p th:if="${documento != null}" th:text="${documento.nome}"></p>
+                        <br/> <br>
+                    
+
                     <button type="submit" class="btn btn-purple">Salvar</button>
                     <button class="btn btn-secundary"><a th:href="@{/declaracoes}">Cancelar</a></button>
                 </form>
