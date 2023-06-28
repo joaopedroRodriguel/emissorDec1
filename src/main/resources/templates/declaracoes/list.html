@@ -18,8 +18,8 @@
                 </div>
                 <br />
                 <div>
-                    <form th:action="@{/declaracoes/consultas}" method="GET">
-                        <button class="btn btn-purple">Consultar</button>
+                    <form th:action="@{/pesquisas}" method="GET">
+                        <button class="btn btn-purple">Pesquisas</button>
                     </form>
                 </div>
             </div>
@@ -34,6 +34,7 @@
                             <th></th>
                             <th>Periodo</th>
                             <th>Atual?</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -52,8 +53,8 @@
                                 th:if="${declaracao.periodoLetivo != null}">
                             </td>
                             <td th:if="${declaracao.periodoLetivo == null}">Sem Periodo Letivo cadastrado</td>
-                           <!-- <td th:if="${declaracao.getEstudante.declaracaoAtual == declaracao}">SIM</td>
-                            <td th:if="${declaracao.getEstudante.declaracaoAtual != declaracao}">NÃO</td> -->
+                           <td th:if="${declaracao.getEstudante.declaracaoAtual == declaracao}">SIM</td>
+                            <td th:if="${declaracao.getEstudante.declaracaoAtual != declaracao}">NÃO</td>
                             <td>
                                 <form th:action="@{/declaracoes/excluir/{id}(id=${declaracao.id})}">
                                     <button type="submit" class="btn btn-purple btn-sm">Excluir</button>
