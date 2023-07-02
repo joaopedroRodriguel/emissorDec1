@@ -20,21 +20,27 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name="tb_periodo")
 public class PeriodoLetivo {
+
     @Id
     @Column(name="periodo_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotNull
     @Min(value = 2000, message = "Valor deve ser maior que 2000")
     private int ano;
+
     @NotNull
     @Min(value = 0, message = "Valor deve ser maior que 0")
     private int periodo;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd")    
     private Date inicio;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Future(message = "Data deve ser futura")
     private Date fim;
+
     @OneToMany(mappedBy = "periodoLetivo",
             targetEntity=Declaracao.class,
             cascade=CascadeType.ALL)
@@ -44,7 +50,7 @@ public class PeriodoLetivo {
     @JoinColumn(name = "instituicao_id")
     private Instituicao instituicao;
 
-    public Instituicao geInstituicao(){
+    public Instituicao getInstituicao(){
         return this.instituicao;
     }
     public PeriodoLetivo(Instituicao instituicao) {

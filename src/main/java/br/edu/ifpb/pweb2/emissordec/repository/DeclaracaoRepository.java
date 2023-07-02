@@ -15,16 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 public interface DeclaracaoRepository extends JpaRepository<Declaracao, Long> {
     List<Declaracao> getDeclaracaoByEstudante(Long id);
-
-    @Query(value = "SELECT * FROM DECLARACAO DEC JOIN DECLARACAO_PERIODO_LETIVO DPL ON DEC.ID = DPL.DECLARACAO_ID " +
-            "JOIN PERIODO_LETIVO PL ON DPL.PERIODO_LETIVO_ID = PL.ID WHERE CURRENT_DATE > PL.FIM", nativeQuery = true)
-    List<Declaracao> buscarDeclaracaoVencidas();
-
-    //Falta testar e ver se essa query está funcionando
-
-    @Query("SELECT d FROM Declaracao d WHERE d.dataVencimento = :dataVencimento")
-    List<Declaracao> buscarDataVencimento(@Param("dataVencimento") LocalDate dataVencimento);
-
+    
     @Query(value = "select d.documento from Declaracao d where d.id = :idDeclaracao")
     Documento findDocumentoById(@Param ("idDeclaracao") Long idDeclaracao);
 
@@ -35,11 +26,7 @@ public interface DeclaracaoRepository extends JpaRepository<Declaracao, Long> {
     
     @Query(value = "SELECT * FROM `tb_declaracao` WHERE `data_vencimento` BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL :qtdDias DAY)", nativeQuery = true)
     List<Declaracao> declaracoNDias(@Param ("qtdDias") Long qtdDias);
-
-    /*SELECT * FROM `tb_declaracao` WHERE `data_vencimento` BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 10 DAY)
-
-    */
-    
+        
 
 }
 

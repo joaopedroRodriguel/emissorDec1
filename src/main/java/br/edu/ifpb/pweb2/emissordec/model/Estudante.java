@@ -21,22 +21,29 @@ public class Estudante {
     @Column(name="estudante_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotBlank(message = "Campo Obrigatório!")
     private String nome;
+
     @NotBlank(message = "Campo Obrigatório!")
     private String matricula;
+
     @OneToOne
     @JoinColumn(name = "username")
     private User user;
+
     @ManyToOne
     @JoinColumn(name = "instituicao_id")
     @ToString.Exclude
     private Instituicao instituicao;
+    
     @OneToMany(mappedBy = "estudante" ,
             targetEntity=Declaracao.class,
             cascade=CascadeType.ALL)
     private List<Declaracao> declaracoes;
+
     private boolean admin;
+    
     @OneToOne
     private Declaracao declaracaoAtual;
 }

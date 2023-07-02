@@ -64,7 +64,7 @@ public class DeclaracaoController {
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView save(@Valid Declaracao declaracao, BindingResult validation, ModelAndView mav, RedirectAttributes attrs) {
         if (validation.hasErrors()) {
-            mav.addObject("message", "Erros de validação! Corrija-os e tente novamente.");
+            mav.addObject("message", validation.getAllErrors());
             mav.setViewName("declaracoes/form");
             return mav;
         }
@@ -75,58 +75,13 @@ public class DeclaracaoController {
             attrs.addFlashAttribute("message", "Declaracao editada com sucesso!");
         }
         declaracao.getEstudante().setDeclaracaoAtual(null);
-        declaracao.getEstudante().setDeclaracaoAtual(declaracao);
+        declaracao.getEstudante().setDeclaracaoAtual(declaracao);                                   
         declaracaoService.insert(declaracao);
         mav.setViewName("redirect:declaracoes");
         return mav;
-    }
+    }    
+    
 
-    /*
-     @RequestMapping(method = RequestMethod.POST)
-public ModelAndView save(@Valid Declaracao declaracao, BindingResult validation, ModelAndView mav, RedirectAttributes attrs,
-                         @RequestParam("file") MultipartFile file) {
-    if (validation.hasErrors()) {
-        mav.addObject("message", "Erros de validação! Corrija-os e tente novamente.");
-        mav.setViewName("declaracoes/form");
-        return mav;
-    }
-
-    if (!file.isEmpty()) {
-        // Verifique se o arquivo é um PDF e faça o processamento necessário
-        if (file.getContentType().equals("application/pdf")) {
-            try {
-                // Salve o arquivo em algum local ou faça o processamento necessário
-                byte[] fileData = file.getBytes();
-                Documento documento = new Documento();
-                documento.setNome(file.getOriginalFilename());
-                documento.setDados(fileData);
-                declaracao.setDocumento(documento);
-            } catch (Exception e) {
-                mav.addObject("message", "Erro ao processar o arquivo PDF.");
-                mav.setViewName("declaracoes/form");
-                return mav;
-            }
-        } else {
-            mav.addObject("message", "O arquivo deve ser um PDF.");
-            mav.setViewName("declaracoes/form");
-            return mav;
-        }
-    }
-
-    if (declaracao.getId() == null) {
-        attrs.addFlashAttribute("message", "Declaração cadastrada com sucesso!");
-    } else {
-        attrs.addFlashAttribute("message", "Declaração editada com sucesso!");
-    }
-
-    declaracao.getEstudante().setDeclaracaoAtual(null);
-    declaracao.getEstudante().setDeclaracaoAtual(declaracao);
-    declaracaoService.insert(declaracao);
-    mav.setViewName("redirect:declaracoes");
-    return mav;
-}*/
-
-     
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView listeDeclaracoes(ModelAndView mav) {
         mav.addObject("declaracoes", declaracaoService.list());
@@ -141,12 +96,7 @@ public ModelAndView save(@Valid Declaracao declaracao, BindingResult validation,
         return mav;
     }
 
-    // @RequestMapping(method = RequestMethod.GET)
-    // public ModelAndView listeDeclaracoesEstudante(ModelAndView mav, Long id) {
-    //     mav.addObject("declaracoesEst", declaracaoService.searchByEst(id));
-    //     mav.setViewName("declaracoes/list");
-    //     return mav;
-    // }
+    
     @RequestMapping("/{id}")
     public ModelAndView getDeclaracaoById(@PathVariable(value = "id") Long id, ModelAndView mav) {
         mav.addObject("declaracao", "declaracao");
@@ -187,17 +137,7 @@ public ModelAndView save(@Valid Declaracao declaracao, BindingResult validation,
         mav.addObject("declaracao", declaracao.get());
         //declaracao.get().getEstudante().setDeclaracaoAtual(newDeclaracao);
         return mav;
-    }
-
-    @RequestMapping("/{id}/documentos")
-    public ModelAndView getDocumentos(@PathVariable ("id") Long id, ModelAndView mav) {
-        Optional<Documento> documento = documentoService.getDocumentoOf(id);
-        if (documento.isPresent()) {
-            mav.addObject("documento", documento.get());
-        }
-        mav.setViewName("declaracoes/documentos/list");
-        return mav;
-    }
+    }    
 
     @RequestMapping(value = "/{id}/documentos/upload", method = RequestMethod.POST)
     public ModelAndView uploadFile(@RequestParam("file") MultipartFile arquivo,
@@ -232,19 +172,19 @@ public ModelAndView save(@Valid Declaracao declaracao, BindingResult validation,
                 .path("/declaracoes/")
                 .path(idDeclaracao.toString())
                 .path("/documentos/")
-                .path(idDocumento.toString())
+                .path(String.valueOf(idDocumento))
                 .toUriString();
         return fileDownloadUri;
     }
 
-    @RequestMapping("/{id}/documentos/{idDoc}")
-    public ResponseEntity<byte[]> getDocumento(@PathVariable("idDoc") Long idDoc) {
-        Documento documento = documentoService.getDocumento(idDoc);
+    @RequestMapping("/{id}/download")
+    public ResponseEntity<byte[]> getDocumento(@PathVariable("id") Long idDoc) {
+        Declaracao declaracao = declaracaoService.search(idDoc).get();
 
         return ResponseEntity
                 .ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + documento.getNome() + "\"")
-                .body(documento.getDados());
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + declaracao.getNome() + "\"")
+                .body(declaracao.getDocumento());
     }
 
 
@@ -261,4 +201,7 @@ public ModelAndView save(@Valid Declaracao declaracao, BindingResult validation,
     public List<Estudante> getEstudantes() {
         return estudanteService.list();
     }
+
+   
+
 }

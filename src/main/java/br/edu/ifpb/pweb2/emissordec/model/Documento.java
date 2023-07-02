@@ -20,11 +20,15 @@ public class Documento implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Campo Obrigatório")
-    private String nome;
 
     @URL
     private String url;
+
+
+    @NotBlank(message = "Campo Obrigatório")
+    private String nome;
+
+    
 
     @Lob
     private byte[] dados;
@@ -32,9 +36,5 @@ public class Documento implements Serializable {
     public Documento(String nome, byte[] dados){
         this.nome = nome;
         this.dados = dados;
-    }
-
-    public void setDados(byte[] dados) {
-    this.dados = dados;
-}
+    }   
 }
