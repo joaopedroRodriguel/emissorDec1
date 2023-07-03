@@ -34,8 +34,12 @@ public class Declaracao {
 
     private String observacao;
 
-    @ManyToOne
-    @JoinColumn(name = "estudante_id")
+//    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST})
+//    @JoinColumn(name = "estudante_id")
+//    private Estudante estudante;
+
+    @ManyToOne(cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "id_estudante")
     private Estudante estudante;
 
     @ManyToOne

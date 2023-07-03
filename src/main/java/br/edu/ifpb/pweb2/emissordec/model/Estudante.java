@@ -9,6 +9,7 @@ import lombok.ToString;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -36,16 +37,25 @@ public class Estudante {
     @JoinColumn(name = "instituicao_id")
     @ToString.Exclude
     private Instituicao instituicao;
-
-
-
-
     private boolean admin;
 
-    @OneToMany(mappedBy = "estudante", cascade = CascadeType.ALL)
-    private List<Declaracao> declaracoes;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "declaracao_atual")
+    @OneToMany(mappedBy = "estudante", cascade = {CascadeType.ALL})
+    @ToString.Exclude
+    private List<Declaracao> declaracaos;
+    @OneToOne
+    @ToString.Exclude
     private Declaracao declaracaoAtual;
+
+//    @OneToMany(mappedBy = "estudante", cascade = CascadeType.ALL)
+//    private List<Declaracao> declaracoes;
+
+//    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JoinColumn(name = "declaracoes")
+//    @ToString.Exclude
+//    private List<Declaracao> declaracoes = new ArrayList<>();
+//
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "declaracao_atual")
+//    private Declaracao declaracaoAtual;
+
 }
