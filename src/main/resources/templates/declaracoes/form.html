@@ -7,7 +7,7 @@
             <h1 th:text="${titulo}"></h1>
         </div>
         <div class="card-body">
-                <form th:action="@{/declaracoes}" method="POST" th:object="${declaracao}">
+                <form th:action="@{/declaracoes}" method="POST" th:object="${declaracao}" enctype="multipart/form-data">
                     <input type="hidden" th:field="*{id}" name="id" class="form-control"/>
 
                     <label for="dataRecebimento">Data de Recebimento</label>
@@ -34,10 +34,8 @@
                         <option th:each="pl : ${periodoLetivoItens}" th:value="${pl.id}" th:text="${pl.ano + '.' + pl.periodo}" class="form-control">
                     </select>
                     <br /><br />
-
-                    
-                    <input type="file" th:field="*{documento}" name="file" accept=".pdf" />
-                    <p th:if="${documento != null}" th:text="${documento.nome}" ></p>
+                   
+                    <input type="file" th:field="*{documento}" class="form-control" name="file" accept="application/pdf"/>                   
                         <br/> <br>
                     
 

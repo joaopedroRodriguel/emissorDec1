@@ -105,7 +105,7 @@ public class EstudanteController {
         return mav;
     }
     @RequestMapping(value = "/edite/{id}")
-    public ModelAndView editeEstudante(@PathVariable("id") Long id, Estudante newEstudante, ModelAndView mav) {
+    public ModelAndView editeEstudante(@PathVariable("id") Long id, ModelAndView mav) {
         mav.setViewName("estudantes/form");
         Optional<Estudante> estudante = estudanteService.search(id);
         mav.addObject("estudante", estudante.get());

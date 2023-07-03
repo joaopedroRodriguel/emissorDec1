@@ -90,8 +90,7 @@ public class PeriodoLetivoController {
     public ModelAndView editePeriodo(@PathVariable("id") Long id, PeriodoLetivo periodoLetivo, ModelAndView mav) {
         mav.setViewName("periodos/form");
         Optional<PeriodoLetivo> periodo = periodoLetivoService.search(id);
-        mav.addObject("periodo", periodo.get());
-        //periodo.get().getInstituicao().setPeriodoAtual(periodoLetivo);
+        mav.addObject("periodo", periodo.get());        
         mav.addObject("titulo", "editado");
         return mav;
 

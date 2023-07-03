@@ -4,10 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.Future;
+import javax.validation.constraints.NotBlank;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -21,21 +24,34 @@ public class Declaracao {
     @Column(name="declaracao_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dataRecebimento;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Future(message = "Data deve ser futura")
     private Date dataVencimento;
-    private String observacao;
 
-    @OneToOne
-    @JoinColumn(name = "documento_id")
-    private Documento documento;
+    private String observacao;
 
     @ManyToOne
     @JoinColumn(name = "estudante_id")
     private Estudante estudante;
+
     @ManyToOne
     @JoinColumn(name = "periodo_id")
     private PeriodoLetivo periodoLetivo;
+    
+    @Lob
+    private byte[] documento;
+
+    @NotBlank(message = "Campo Obrigatório")
+    private String nome;   
+    
+    public void setDocumento(MultipartFile multipartFile) throws IOException {
+        this.documento = multipartFile.getBytes();
+        this.nome = multipartFile.getOriginalFilename();
+    }
+
+
 }

@@ -12,13 +12,15 @@ import java.util.Optional;
 
 @Service
 public class DocumentoService {
+
     @Autowired
     private DocumentoRepository documentoRepository;
+
     @Autowired
     private DeclaracaoRepository declaracaoRepository;
+    
     public Documento grave(Declaracao declaracao, String nomeArquivo, byte[] bytes) throws IOException {
-        Documento documento = new Documento(nomeArquivo, bytes);
-        declaracao.setDocumento(documento);
+        Documento documento = new Documento(nomeArquivo, bytes);        
         documentoRepository.save(documento);
         return documento;
     }
