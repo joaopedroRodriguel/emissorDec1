@@ -39,9 +39,10 @@ public class Estudante {
     private Instituicao instituicao;
     private boolean admin;
 
-    @OneToMany(mappedBy = "estudante", cascade = {CascadeType.ALL})
-    @ToString.Exclude
-    private List<Declaracao> declaracaos;
+//    @OneToMany(mappedBy = "estudante", cascade = {CascadeType.ALL})
+//    @ToString.Exclude
+//    private List<Declaracao> declaracaos;
+
     @OneToOne
     @ToString.Exclude
     private Declaracao declaracaoAtual;
@@ -49,10 +50,10 @@ public class Estudante {
 //    @OneToMany(mappedBy = "estudante", cascade = CascadeType.ALL)
 //    private List<Declaracao> declaracoes;
 
-//    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-//    @JoinColumn(name = "declaracoes")
-//    @ToString.Exclude
-//    private List<Declaracao> declaracoes = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "declaracoes")
+    @ToString.Exclude
+    private List<Declaracao> declaracoes = new ArrayList<>();
 //
 //    @OneToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "declaracao_atual")
