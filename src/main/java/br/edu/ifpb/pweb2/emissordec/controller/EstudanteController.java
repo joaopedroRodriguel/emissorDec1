@@ -130,6 +130,7 @@ public class EstudanteController {
         return declaracaoService.list();
     }
 
+
     @ModelAttribute("users")
     public List<User> getUsersOptions(){
         return userRepository.findByEnabledTrue();
