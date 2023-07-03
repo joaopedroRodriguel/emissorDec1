@@ -36,14 +36,16 @@ public class Estudante {
     @JoinColumn(name = "instituicao_id")
     @ToString.Exclude
     private Instituicao instituicao;
-    
-    @OneToMany(mappedBy = "estudante" ,
-            targetEntity=Declaracao.class,
-            cascade=CascadeType.ALL)
-    private List<Declaracao> declaracoes;
+
+
+
 
     private boolean admin;
+
+    @OneToMany(mappedBy = "estudante", cascade = CascadeType.ALL)
+    private List<Declaracao> declaracoes;
+
     @OneToOne(cascade = CascadeType.ALL)
-    // cascade 
+    @JoinColumn(name = "declaracao_atual")
     private Declaracao declaracaoAtual;
 }

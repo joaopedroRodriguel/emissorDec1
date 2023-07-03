@@ -53,5 +53,12 @@ public class Declaracao {
         this.nome = multipartFile.getOriginalFilename();
     }
 
+    public Estudante getEstudante(){
+        return this.estudante;
+    }
+    public Declaracao (Estudante estudante) {
+        this.estudante = estudante;
+    }
+
 
 }

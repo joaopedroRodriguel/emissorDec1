@@ -35,6 +35,11 @@
                 <select th:field="*{instituicao.id}" class="form-control" id="option-card">
                     <option th:each="inst : ${instituicaoItens}" th:value="${inst.id}" th:text="${inst.nome}" />
                 </select>
+
+                <label for="declaracaoAtual">Declaracao Atual</label>
+                <select th:field="*{declaracaoAtual.id}" class="form-control" id="option-card2">
+                    <!-- <option th:text="'Sem período'" value="null"></option> -->
+                    <option th:each="da : ${declaracaoItens}" th:value="${da.id}" th:text="${da.dataVencimento}"/>
                 <br /><br />
 
 

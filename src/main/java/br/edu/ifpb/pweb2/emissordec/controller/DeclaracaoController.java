@@ -140,6 +140,7 @@ public class DeclaracaoController {
         Optional<Declaracao> declaracao = declaracaoService.search(id);
         mav.addObject("declaracao", declaracao.get());
         //declaracao.get().getEstudante().setDeclaracaoAtual(newDeclaracao);
+        newDeclaracao.getEstudante().setDeclaracaoAtual(newDeclaracao);
         return mav;
     }    
 
