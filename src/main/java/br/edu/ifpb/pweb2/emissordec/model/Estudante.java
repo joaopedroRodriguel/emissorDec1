@@ -37,6 +37,7 @@ public class Estudante {
             cascade=CascadeType.ALL)
     private List<Declaracao> declaracoes;
     private boolean admin;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    // cascade 
     private Declaracao declaracaoAtual;
 }
