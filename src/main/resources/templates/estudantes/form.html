@@ -40,8 +40,8 @@
                 <select th:field="*{declaracaoAtual.id}" class="form-control" id="option-card2">
                     <!-- <option th:text="'Sem período'" value="null"></option> -->
                     <option th:each="da : ${declaracaoItens}" th:value="${da.id}" th:text="${da.dataVencimento}"/>
+                </select>
                 <br /><br />
-
 
                 <button type="submit" class="btn btn-purple">Salvar</button>
                 <button class="btn btn-secundary"><a th:href="@{/estudantes}">Cancelar</a></button>
