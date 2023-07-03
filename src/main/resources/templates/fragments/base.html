@@ -21,19 +21,19 @@
             <a th:classappend="${menu == 'home'} ? 'active'" class="nav-item nav-link menu-item" th:href="@{/}">Home</a>
             <a th:classappend="${menu == 'estudante'} ? 'active'" class="nav-item nav-link menu-item"
                 th:href="@{/estudantes}">Estudante</a>
-            <a th:classappend="${menu == 'instituicao'} ? 'active'" class="nav-item nav-link menu-item"
+            <a sec:authorize="hasRole('ADMIN')" th:classappend="${menu == 'instituicao'} ? 'active'" class="nav-item nav-link menu-item"
                 th:href="@{/instituicoes}">Instituição</a>
             <!-- <a th:classappend="${menu == 'declaracao'} ? 'active'" class="nav-item nav-link menu-item" th:href="@{/declaracoes}">Declaração</a> -->
-            <a th:classappend="${menu == 'periodoLetivo'} ? 'active'" class="nav-item nav-link menu-item"
+            <a sec:authorize="hasRole('ADMIN')" th:classappend="${menu == 'periodoLetivo'} ? 'active'" class="nav-item nav-link menu-item"
                 th:href="@{/periodos}">Periodo</a>
-            <a th:classappend="${menu == 'pesquisas'} ? 'active'" class="nav-item nav-link menu-item"
+            <a sec:authorize="hasAnyRole('CLIENTE', 'ADMIN')" th:classappend="${menu == 'pesquisas'} ? 'active'" class="nav-item nav-link menu-item"
                 th:href="@{/pesquisas}">Pesquisas</a>
         </div>
         <form class="form-inline my-2 my-lg-0" th:action="@{/auth/logout}" method="POST">
             <span
-                class="color-white"
                 sec:authorize="isAuthenticated()" sec:authentication="name"
-                style="margin-right: 3px; font-size: 0.8em;">
+                class="color-white"
+                style="margin-right: 3px; font-size: 1.1em;">
             </span>
             <a th:href="@{/auth/logout}">
                 <button class="btn bg-blue color-white my-2 my-sm-0">Sair</button>

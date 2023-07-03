@@ -43,12 +43,7 @@ public class Estudante {
     private List<Declaracao> declaracoes;
 
     private boolean admin;
-<<<<<<< HEAD
     @OneToOne(cascade = CascadeType.ALL)
     // cascade 
-=======
-    
-    @OneToOne
->>>>>>> b815afb7ed9d50d04eb04665c8ca4704ead82311
     private Declaracao declaracaoAtual;
 }

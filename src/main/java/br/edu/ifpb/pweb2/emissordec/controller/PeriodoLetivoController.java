@@ -5,6 +5,7 @@ import br.edu.ifpb.pweb2.emissordec.model.PeriodoLetivo;
 import br.edu.ifpb.pweb2.emissordec.service.InstituicaoService;
 import br.edu.ifpb.pweb2.emissordec.service.PeriodoLetivoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -76,6 +77,8 @@ public class PeriodoLetivoController {
         }
         return mav;
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping("/excluir/{id}")
     public ModelAndView deletePeriodoById(@PathVariable("id") Long id, ModelAndView mav, RedirectAttributes attr) {
         Optional<PeriodoLetivo> pl = periodoLetivoService.search(id);
@@ -86,6 +89,8 @@ public class PeriodoLetivoController {
         mav.setViewName("redirect:/periodos");
         return mav;
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/edite/{id}")
     public ModelAndView editePeriodo(@PathVariable("id") Long id, PeriodoLetivo periodoLetivo, ModelAndView mav) {
         mav.setViewName("periodos/form");

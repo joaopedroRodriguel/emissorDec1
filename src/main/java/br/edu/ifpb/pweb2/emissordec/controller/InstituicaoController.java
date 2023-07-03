@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -37,6 +38,8 @@ public class InstituicaoController {
     PeriodoLetivoService periodoLetivoService;
     @Autowired
     InstituicaoRepository instituicaoRepository;
+
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping("/form")
     public ModelAndView getForm(Instituicao instituicao,ModelAndView mav) {
         mav.setViewName("instituicoes/form");
@@ -88,6 +91,8 @@ public class InstituicaoController {
         }
         return mav;
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping("/excluir/{id}")
     public ModelAndView deleteInstituicaoById(@PathVariable("id") Long id, ModelAndView mav, RedirectAttributes attr) {
         Optional<Instituicao> instituicao = instituicaoService.search(id);
@@ -97,6 +102,8 @@ public class InstituicaoController {
         mav.setViewName("redirect:/instituicoes");
         return mav;
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/edite/{id}")
     public ModelAndView editeInstituicao(@PathVariable("id") Long id, Instituicao newInstituicao, ModelAndView mav) {
         mav.setViewName("instituicoes/form");

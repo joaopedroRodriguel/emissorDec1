@@ -10,6 +10,7 @@ import br.edu.ifpb.pweb2.emissordec.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
@@ -48,6 +49,8 @@ public class DeclaracaoController {
     public String selectMenu() {
         return "declaracao";
     }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'CLIENTE')")
     @RequestMapping("/form")
     public ModelAndView getForm(Declaracao declaracao, ModelAndView mav) {
         mav.setViewName("declaracoes/form");
@@ -82,6 +85,7 @@ public class DeclaracaoController {
     }    
     
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'CLIENTE')")
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView listeDeclaracoes(ModelAndView mav) {
         mav.addObject("declaracoes", declaracaoService.list());
