@@ -39,7 +39,7 @@ public class Declaracao {
 //    private Estudante estudante;
 
     @ManyToOne(cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "id_estudante")
+    @JoinColumn(name = "estudante_id")
     private Estudante estudante;
 
     @ManyToOne
