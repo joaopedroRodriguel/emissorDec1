@@ -4,7 +4,7 @@
 <body>
     <div layout:fragment="content">
         <div class="card-body">
-            <form th:action="@{/periodos/form}" method="GET">
+            <form th:action="@{/periodos/form}" method="GET" sec:authorize="hasRole('ADMIN')">
                 <button class="btn btn-purple" type="submit">Novo</button>
             </form>
             <br />
@@ -36,7 +36,7 @@
                             <td th:if="${periodo.getInstituicao.getPeriodoAtual.id == periodo.id}">SIM</td>
                             <td th:if="${periodo.getInstituicao.getPeriodoAtual.id != periodo.id}">NÃO</td>
                             <td>
-                                <form th:action="@{/periodos/excluir/{id}(id=${periodo.id})}">
+                                <form th:action="@{/periodos/excluir/{id}(id=${periodo.id})}" sec:authorize="hasRole('ADMIN')">
                                     <button type="submit" class="btn btn-purple btn-sm">Excluir</button>
                                 </form>
                             </td>

@@ -8,13 +8,13 @@
     <div layout:fragment="content">
         <div class="card-body">
             <div class="divBtnEst">
-                <div>
+                <div sec:authorize="hasRole('ADMIN')">
                     <form th:action="@{/estudantes/form}" method="GET">
                         <button class="btn btn-purple btnNovo" type="submit">Novo</button>
                     </form>
                 </div>
                 <br />
-                <div>
+                <div sec:authorize="hasAnyRole('CLIENTE', 'ADMIN')">
                     <form th:action="@{/declaracoes}" method="GET">
                         <button class="btn btn-purple">Declarações</button>
                     </form>
@@ -46,7 +46,7 @@
                             <td class="text-center" th:text="${estudante.user != null ? estudante.user.username : 'Sem usuário'}"></td>
                             <td>            
 
-                                <form th:action="@{/estudantes/excluir/{id}(id=${estudante.id})}">
+                                <form th:action="@{/estudantes/excluir/{id}(id=${estudante.id})}" sec:authorize="hasRole('ADMIN')">
                                     <button type="submit" class="btn btn-purple btn-sm">Excluir</button>
                                 </form>
                             </td>
